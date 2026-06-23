@@ -5,16 +5,27 @@
     box-sizing: border-box;
 }
 
-body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
-    min-height: 100vh;
-    background: var(--bg);
-    color: var(--text);
-    transition: background 0.3s ease, color 0.3s ease;
+/* ===== THEME VARIABLES ===== */
+:root {
+    --bg: #0d1117;
+    --text: #00cc88;
+    --accent: #00cc88;
+    --accent-glow: rgba(0, 204, 136, 0.4);
+    --card-bg: #161b22;
+    --border: #21262d;
+    --btn-border: #00cc88;
+    --btn-text: #00cc88;
+    --transcript-bg: #0d1117;
+    --transcript-border: #00cc88;
+    --placeholder: #3d6b5c;
+    --mic-icon: #ffffff;
+    --status-color: #00cc88;
+    --select-bg: #161b22;
 }
 
 /* ===== THEME: STT1 — Light / Blue ===== */
-[data-theme="stt1"] {
+[data-theme="stt1"],
+[data-theme="stt1"] body {
     --bg: #f5f5f5;
     --text: #333333;
     --accent: #4a90d9;
@@ -32,7 +43,8 @@ body {
 }
 
 /* ===== THEME: STT2 — Dark / Matrix Green (DEFAULT) ===== */
-[data-theme="stt2"] {
+[data-theme="stt2"],
+[data-theme="stt2"] body {
     --bg: #0d1117;
     --text: #00cc88;
     --accent: #00cc88;
@@ -50,7 +62,8 @@ body {
 }
 
 /* ===== THEME: STT3 — Warm / Orange ===== */
-[data-theme="stt3"] {
+[data-theme="stt3"],
+[data-theme="stt3"] body {
     --bg: #fdf6e3;
     --text: #5c4a3a;
     --accent: #e07c3e;
@@ -65,6 +78,15 @@ body {
     --mic-icon: #ffffff;
     --status-color: #7a6455;
     --select-bg: #fffdf8;
+}
+
+/* ===== BODY ===== */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+    min-height: 100vh;
+    background-color: var(--bg);
+    color: var(--text);
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* ===== CONTAINER ===== */
@@ -116,10 +138,10 @@ body {
 
 .theme-btn {
     padding: 6px 14px;
-    border: 1.5px solid var(--border);
+    border: 1.5px solid var(--btn-border);
     border-radius: 20px;
     background: transparent;
-    color: var(--text);
+    color: var(--btn-text);
     font-size: 0.72rem;
     font-weight: 600;
     cursor: pointer;
@@ -129,14 +151,16 @@ body {
 }
 
 .theme-btn:hover {
+    background: var(--accent);
+    color: var(--bg);
     border-color: var(--accent);
-    color: var(--accent);
 }
 
 .theme-btn.active {
     background: var(--accent);
     border-color: var(--accent);
     color: var(--bg);
+    font-weight: 700;
 }
 
 /* ===== MAIN ===== */
@@ -157,19 +181,19 @@ body {
 
 .language-wrapper select {
     padding: 9px 24px 9px 16px;
-    border: 1.5px solid var(--border);
+    border: 1.5px solid var(--btn-border);
     border-radius: 20px;
-    background: var(--select-bg);
+    background-color: var(--select-bg);
     color: var(--text);
     font-size: 0.85rem;
     cursor: pointer;
     outline: none;
     transition: border-color 0.2s ease;
-    appearance: auto;
 }
 
 .language-wrapper select:focus {
     border-color: var(--accent);
+    box-shadow: 0 0 6px var(--accent-glow);
 }
 
 /* ===== MIC BUTTON ===== */
@@ -178,6 +202,7 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 14px;
+    margin: 10px 0;
 }
 
 .mic-btn {
@@ -186,19 +211,19 @@ body {
     height: 84px;
     border-radius: 50%;
     border: none;
-    background: var(--accent);
+    background-color: var(--accent);
     color: var(--mic-icon);
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 0 24px var(--accent-glow);
+    box-shadow: 0 0 25px var(--accent-glow), 0 0 50px var(--accent-glow);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .mic-btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 35px var(--accent-glow);
+    transform: scale(1.06);
+    box-shadow: 0 0 35px var(--accent-glow), 0 0 70px var(--accent-glow);
 }
 
 .mic-btn.recording {
@@ -213,9 +238,9 @@ body {
 /* Pulse Ring */
 .pulse-ring {
     position: absolute;
-    inset: -4px;
+    inset: -6px;
     border-radius: 50%;
-    border: 2px solid var(--accent);
+    border: 2.5px solid var(--accent);
     opacity: 0;
     pointer-events: none;
 }
@@ -226,25 +251,25 @@ body {
 
 @keyframes mic-pulse {
     0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.07); }
+    50% { transform: scale(1.08); }
 }
 
 @keyframes ring-pulse {
     0% {
         transform: scale(1);
-        opacity: 0.6;
+        opacity: 0.7;
     }
     100% {
-        transform: scale(1.7);
+        transform: scale(1.8);
         opacity: 0;
     }
 }
 
 .status-text {
-    font-size: 0.84rem;
+    font-size: 0.85rem;
     color: var(--status-color);
     font-weight: 500;
-    letter-spacing: 0.2px;
+    letter-spacing: 0.3px;
 }
 
 /* ===== TRANSCRIPT BOX ===== */
@@ -256,13 +281,13 @@ body {
     padding: 18px;
     border: 1.5px solid var(--transcript-border);
     border-radius: 12px;
-    background: var(--transcript-bg);
-    transition: border-color 0.3s ease, background 0.3s ease;
+    background-color: var(--transcript-bg);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .transcript-box.active {
     border-color: var(--accent);
-    box-shadow: 0 0 8px var(--accent-glow);
+    box-shadow: 0 0 12px var(--accent-glow);
 }
 
 .transcript-placeholder {
@@ -288,7 +313,7 @@ body {
     word-wrap: break-word;
 }
 
-/* Scrollbar styling */
+/* Scrollbar */
 .transcript-box::-webkit-scrollbar {
     width: 5px;
 }
@@ -296,14 +321,14 @@ body {
     background: transparent;
 }
 .transcript-box::-webkit-scrollbar-thumb {
-    background: var(--border);
+    background: var(--accent);
     border-radius: 3px;
 }
 
 /* ===== ACTION BUTTONS ===== */
 .actions {
     display: flex;
-    gap: 10px;
+    gap: 12px;
     flex-wrap: wrap;
     justify-content: center;
 }
@@ -331,9 +356,10 @@ body {
 }
 
 .action-btn:hover {
-    background: var(--accent);
+    background-color: var(--accent);
     color: var(--bg);
     border-color: var(--accent);
+    box-shadow: 0 0 10px var(--accent-glow);
 }
 
 .action-btn:hover svg {
@@ -350,7 +376,7 @@ body {
     bottom: 28px;
     left: 50%;
     transform: translateX(-50%) translateY(16px);
-    background: var(--accent);
+    background-color: var(--accent);
     color: var(--bg);
     padding: 11px 24px;
     border-radius: 22px;
