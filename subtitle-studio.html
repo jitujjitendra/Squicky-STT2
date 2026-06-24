@@ -113,6 +113,23 @@
     </div>
   </div>
 
+  <!-- Online Video URL Section -->
+  <div class="ss-upload-section" id="ssUrlSection">
+    <h3 class="ss-section-title">&#127760; Generate Subtitles from Online Video URL</h3>
+    <div class="ss-url-input-row">
+      <input type="url" class="ss-url-input" id="ssVideoUrl" placeholder="Paste video URL here (YouTube, direct .mp4 link, etc.)">
+      <button class="ss-generate-file-btn" id="ssUrlLoadBtn">&#9654; Load Video</button>
+    </div>
+    <div class="ss-url-player" id="ssUrlPlayer" style="display:none;">
+      <video class="ss-url-video" id="ssUrlVideo" controls crossorigin="anonymous"></video>
+      <div class="ss-generate-controls">
+        <button class="ss-generate-file-btn" id="ssUrlGenerateBtn">&#127908; Generate Subtitles from Video</button>
+        <button class="ss-stop-generate-btn" id="ssUrlStopBtn" style="display:none;">&#9632; Stop</button>
+      </div>
+      <p class="ss-media-note">&#9888; Note: Only direct video links work (ending in .mp4, .webm). YouTube links require download first. Audio plays through speakers while mic captures speech.</p>
+    </div>
+  </div>
+
   <!-- Subtitle Cards Container -->
   <div class="ss-cards-wrapper" id="subtitleCardsWrapper">
     <div class="ss-no-subtitles" id="noSubtitles">

@@ -635,8 +635,8 @@
 
     // Setup speech recognition
     recognition = new SpeechRecognition();
-    recognition.continuous = true;
-    recognition.interimResults = true;
+    recognition.continuous = false;
+    recognition.interimResults = false;
     recognition.lang = 'en-US';
 
     currentSegmentStart = 0;
@@ -735,6 +735,129 @@
     ssStopGenerateBtn.style.display = 'none';
 
     renderSubtitles();
+  }
+
+  // ===== ONLINE VIDEO URL =====
+  const ssVideoUrl = document.getElementById('ssVideoUrl');
+  const ssUrlLoadBtn = document.getElementById('ssUrlLoadBtn');
+  const ssUrlPlayer = document.getElementById('ssUrlPlayer');
+  const ssUrlVideo = document.getElementById('ssUrlVideo');
+  const ssUrlGenerateBtn = document.getElementById('ssUrlGenerateBtn');
+  const ssUrlStopBtn = document.getElementById('ssUrlStopBtn');
+  let urlRecognition = null;
+  let urlIsGenerating = false;
+
+  if (ssUrlLoadBtn) {
+    ssUrlLoadBtn.addEventListener('click', () => {
+      const url = ssVideoUrl.value.trim();
+      if (!url) {
+        showToast('Please paste a video URL');
+        return;
+      }
+      ssUrlVideo.src = url;
+      ssUrlPlayer.style.display = 'block';
+      ssUrlVideo.load();
+      showToast('Video loaded. Click Generate to start.');
+    });
+  }
+
+  if (ssUrlGenerateBtn) {
+    ssUrlGenerateBtn.addEventListener('click', () => {
+      if (!ssUrlVideo.src) {
+        showToast('Load a video first');
+        return;
+      }
+      startUrlGeneration();
+    });
+  }
+
+  if (ssUrlStopBtn) {
+    ssUrlStopBtn.addEventListener('click', stopUrlGeneration);
+  }
+
+  function startUrlGeneration() {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      showToast('Speech recognition not supported. Use Chrome.');
+      return;
+    }
+
+    urlIsGenerating = true;
+    subtitles = [];
+    nextId = 1;
+    ssUrlGenerateBtn.style.display = 'none';
+    ssUrlStopBtn.style.display = 'inline-flex';
+
+    urlRecognition = new SpeechRecognition();
+    urlRecognition.continuous = false;
+    urlRecognition.interimResults = false;
+    urlRecognition.lang = 'en-US';
+
+    let segStart = 0;
+
+    urlRecognition.onresult = (event) => {
+      for (let i = 0; i < event.results.length; i++) {
+        if (event.results[i].isFinal) {
+          const text = event.results[i][0].transcript.trim();
+          if (text) {
+            const endTime = ssUrlVideo.currentTime;
+            subtitles.push({
+              id: nextId++,
+              text: text,
+              startTime: segStart,
+              endTime: endTime
+            });
+            segStart = endTime;
+            renderSubtitles();
+          }
+        }
+      }
+    };
+
+    urlRecognition.onend = () => {
+      if (urlIsGenerating && !ssUrlVideo.paused && !ssUrlVideo.ended) {
+        segStart = ssUrlVideo.currentTime;
+        setTimeout(() => {
+          if (urlIsGenerating) {
+            try { urlRecognition.start(); } catch(e) {}
+          }
+        }, 100);
+      } else if (ssUrlVideo.ended) {
+        stopUrlGeneration();
+      }
+    };
+
+    urlRecognition.onerror = (event) => {
+      if (event.error === 'no-speech' && urlIsGenerating) {
+        // Restart silently
+      } else if (event.error !== 'aborted') {
+        showToast('Recognition error: ' + event.error);
+      }
+    };
+
+    ssUrlVideo.play();
+    segStart = 0;
+    urlRecognition.start();
+    showToast('Generating subtitles... Let video audio play through speakers.');
+
+    ssUrlVideo.addEventListener('ended', stopUrlGeneration, { once: true });
+  }
+
+  function stopUrlGeneration() {
+    urlIsGenerating = false;
+    if (urlRecognition) {
+      try { urlRecognition.stop(); } catch(e) {}
+      urlRecognition = null;
+    }
+    ssUrlVideo.pause();
+    ssUrlGenerateBtn.style.display = 'inline-flex';
+    ssUrlStopBtn.style.display = 'none';
+    renderSubtitles();
+    if (subtitles.length > 0) {
+      showToast(subtitles.length + ' subtitles generated!');
+    } else {
+      showToast('No speech detected. Try in quiet environment.');
+    }
   }
 
   // ===== INIT =====

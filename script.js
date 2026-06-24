@@ -239,7 +239,7 @@ function initRecognition() {
     }
 
     const recog = new SpeechRecognition();
-    recog.continuous = true;
+    recog.continuous = false;
     recog.interimResults = true;
     recog.lang = getRecognitionLang(languageSelect.value);
 
@@ -253,7 +253,6 @@ function initRecognition() {
         micOuter.classList.add('recording');
         recStatus.textContent = 'Listening...';
         recStatus.className = 'rec-status listening';
-        // Only start timer/audio if not already running (prevents duplicates on auto-reconnect)
         if (!timerInterval) startTimer();
         if (!audioLevel.classList.contains('active')) startAudioLevel();
     };
@@ -264,12 +263,13 @@ function initRecognition() {
             const t = event.results[i][0].transcript;
             if (event.results[i].isFinal) {
                 finalTranscript += t + ' ';
+                interimText.textContent = '';
             } else {
                 interim += t;
             }
         }
         finalText.textContent = finalTranscript;
-        interimText.textContent = interim;
+        if (interim) interimText.textContent = interim;
         transcript.scrollTop = transcript.scrollHeight;
     };
 
@@ -281,8 +281,7 @@ function initRecognition() {
             recStatus.className = 'rec-status';
             stopRecording();
         } else if (event.error === 'no-speech') {
-            // Don't stop, just notify briefly
-            recStatus.textContent = 'No speech detected...';
+            // Silently restart — user just hasn't spoken yet
         } else if (event.error === 'language-not-supported') {
             showToast('This language is not supported on your device. Try English.');
             stopRecording();
@@ -297,21 +296,23 @@ function initRecognition() {
     };
 
     recog.onend = () => {
-        // Auto-reconnect for continuous mode
+        // Auto-restart if still recording (continuous simulation)
         if (isRecording && !isPaused) {
-            // Create fresh recognition instance to avoid duplicate results on mobile
             setTimeout(() => {
                 if (isRecording && !isPaused) {
                     try {
-                        recognition = initRecognition();
-                        if (recognition) {
-                            recognition.start();
-                        }
+                        recog.start();
                     } catch (err) {
-                        stopRecording();
+                        // If same instance fails, create new one
+                        try {
+                            recognition = initRecognition();
+                            if (recognition) recognition.start();
+                        } catch (e) {
+                            stopRecording();
+                        }
                     }
                 }
-            }, 200);
+            }, 100);
         }
     };
 
