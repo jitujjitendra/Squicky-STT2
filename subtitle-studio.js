@@ -477,6 +477,266 @@
     return div.innerHTML;
   }
 
+  // ===== AUDIO/VIDEO UPLOAD & GENERATION =====
+  const ssDropzone = document.getElementById('ssDropzone');
+  const ssFileInput = document.getElementById('ssFileInput');
+  const ssUploadBtn = document.getElementById('ssUploadBtn');
+  const ssMediaArea = document.getElementById('ssMediaArea');
+  const ssMediaPlayer = document.getElementById('ssMediaPlayer');
+  const ssMediaFileInfo = document.getElementById('ssMediaFileInfo');
+  const ssFileName = document.getElementById('ssFileName');
+  const ssFileSize = document.getElementById('ssFileSize');
+  const ssFileRemove = document.getElementById('ssFileRemove');
+  const ssGenerateBtn = document.getElementById('ssGenerateBtn');
+  const ssStopGenerateBtn = document.getElementById('ssStopGenerateBtn');
+  const ssGenerateProgress = document.getElementById('ssGenerateProgress');
+  const ssProgressFill = document.getElementById('ssProgressFill');
+  const ssProgressText = document.getElementById('ssProgressText');
+
+  let mediaElement = null;
+  let mediaFileURL = null;
+  let isGenerating = false;
+  let recognition = null;
+  let generationProgressInterval = null;
+  let currentSegmentStart = 0;
+
+  const ACCEPTED_TYPES = ['.mp3','.wav','.ogg','.m4a','.flac','.webm','.mp4','.mkv','.avi'];
+  const AUDIO_EXTENSIONS = ['.mp3','.wav','.ogg','.m4a','.flac'];
+  const VIDEO_EXTENSIONS = ['.webm','.mp4','.mkv','.avi'];
+
+  // Dropzone click
+  ssDropzone.addEventListener('click', () => ssFileInput.click());
+  ssUploadBtn.addEventListener('click', (e) => { e.stopPropagation(); ssFileInput.click(); });
+
+  // Drag and drop
+  ssDropzone.addEventListener('dragover', (e) => { e.preventDefault(); ssDropzone.classList.add('dragover'); });
+  ssDropzone.addEventListener('dragleave', () => ssDropzone.classList.remove('dragover'));
+  ssDropzone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    ssDropzone.classList.remove('dragover');
+    const files = e.dataTransfer.files;
+    if (files.length > 0) handleMediaFile(files[0]);
+  });
+
+  // File input change
+  ssFileInput.addEventListener('change', () => {
+    if (ssFileInput.files.length > 0) handleMediaFile(ssFileInput.files[0]);
+  });
+
+  function getFileExtension(filename) {
+    const ext = '.' + filename.split('.').pop().toLowerCase();
+    return ext;
+  }
+
+  function formatFileSize(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1048576).toFixed(1) + ' MB';
+  }
+
+  function formatMediaTime(seconds) {
+    if (!seconds || isNaN(seconds)) return '0:00';
+    const m = Math.floor(seconds / 60);
+    const s = Math.floor(seconds % 60);
+    return m + ':' + String(s).padStart(2, '0');
+  }
+
+  function handleMediaFile(file) {
+    const ext = getFileExtension(file.name);
+    if (!ACCEPTED_TYPES.includes(ext)) {
+      showToast('Unsupported file type. Use MP3, WAV, OGG, M4A, FLAC, WEBM, MP4, MKV, or AVI.');
+      return;
+    }
+
+    // Clean up previous media
+    cleanupMedia();
+
+    // Show media area
+    ssDropzone.style.display = 'none';
+    ssMediaArea.style.display = 'block';
+
+    // File info
+    ssFileName.textContent = file.name;
+    ssFileSize.textContent = formatFileSize(file.size);
+
+    // Create object URL
+    mediaFileURL = URL.createObjectURL(file);
+
+    // Create appropriate player
+    const isVideo = VIDEO_EXTENSIONS.includes(ext);
+    if (isVideo) {
+      mediaElement = document.createElement('video');
+      mediaElement.controls = true;
+      mediaElement.preload = 'metadata';
+    } else {
+      mediaElement = document.createElement('audio');
+      mediaElement.controls = true;
+      mediaElement.preload = 'metadata';
+    }
+    mediaElement.src = mediaFileURL;
+    ssMediaPlayer.innerHTML = '';
+    ssMediaPlayer.appendChild(mediaElement);
+  }
+
+  // Remove file
+  ssFileRemove.addEventListener('click', () => {
+    stopGeneration();
+    cleanupMedia();
+    ssDropzone.style.display = 'block';
+    ssMediaArea.style.display = 'none';
+    ssFileInput.value = '';
+  });
+
+  function cleanupMedia() {
+    if (mediaElement) {
+      mediaElement.pause();
+      mediaElement.src = '';
+      mediaElement = null;
+    }
+    if (mediaFileURL) {
+      URL.revokeObjectURL(mediaFileURL);
+      mediaFileURL = null;
+    }
+    ssMediaPlayer.innerHTML = '';
+    ssGenerateProgress.style.display = 'none';
+    ssGenerateBtn.style.display = 'inline-flex';
+    ssStopGenerateBtn.style.display = 'none';
+  }
+
+  // Generate subtitles from file
+  ssGenerateBtn.addEventListener('click', () => {
+    if (!mediaElement) {
+      showToast('Please upload a file first.');
+      return;
+    }
+    startGeneration();
+  });
+
+  ssStopGenerateBtn.addEventListener('click', () => {
+    stopGeneration();
+  });
+
+  function startGeneration() {
+    // Check for Speech Recognition support
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      showToast('Speech Recognition is not supported in this browser.');
+      return;
+    }
+
+    isGenerating = true;
+    ssGenerateBtn.style.display = 'none';
+    ssStopGenerateBtn.style.display = 'inline-flex';
+    ssGenerateProgress.style.display = 'block';
+
+    // Reset subtitles
+    subtitles = [];
+    renderSubtitles();
+
+    // Setup speech recognition
+    recognition = new SpeechRecognition();
+    recognition.continuous = true;
+    recognition.interimResults = true;
+    recognition.lang = 'en-US';
+
+    currentSegmentStart = 0;
+
+    recognition.onresult = (event) => {
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        if (event.results[i].isFinal) {
+          const text = event.results[i][0].transcript.trim();
+          if (text) {
+            const endTime = mediaElement ? mediaElement.currentTime : 0;
+            subtitles.push({
+              id: nextId++,
+              text: text,
+              startTime: currentSegmentStart,
+              endTime: endTime
+            });
+            currentSegmentStart = endTime;
+            renderSubtitles();
+          }
+        }
+      }
+    };
+
+    recognition.onerror = (event) => {
+      if (event.error === 'no-speech') return; // Ignore no-speech errors
+      if (event.error === 'aborted') return;
+      showToast('Speech recognition error: ' + event.error);
+    };
+
+    recognition.onend = () => {
+      // Restart recognition if still generating (browser may stop it)
+      if (isGenerating && mediaElement && !mediaElement.paused && !mediaElement.ended) {
+        try {
+          currentSegmentStart = mediaElement.currentTime;
+          recognition.start();
+        } catch(e) { /* ignore */ }
+      }
+    };
+
+    // Start playback from beginning
+    mediaElement.currentTime = 0;
+    mediaElement.play().then(() => {
+      // Start recognition after playback starts
+      try {
+        recognition.start();
+      } catch(e) {
+        showToast('Could not start speech recognition.');
+        stopGeneration();
+        return;
+      }
+    }).catch(() => {
+      showToast('Could not play media. Check file format.');
+      stopGeneration();
+      return;
+    });
+
+    // Progress tracking
+    generationProgressInterval = setInterval(() => {
+      if (mediaElement && mediaElement.duration) {
+        const current = mediaElement.currentTime;
+        const total = mediaElement.duration;
+        const pct = Math.min((current / total) * 100, 100);
+        ssProgressFill.style.width = pct + '%';
+        ssProgressText.textContent = formatMediaTime(current) + ' / ' + formatMediaTime(total);
+      }
+    }, 250);
+
+    // Listen for media end
+    mediaElement.addEventListener('ended', onMediaEnded);
+  }
+
+  function onMediaEnded() {
+    stopGeneration();
+    showToast('Generation complete! ' + subtitles.length + ' subtitles created.');
+  }
+
+  function stopGeneration() {
+    isGenerating = false;
+
+    if (recognition) {
+      try { recognition.abort(); } catch(e) { /* ignore */ }
+      recognition = null;
+    }
+
+    if (mediaElement) {
+      mediaElement.pause();
+      mediaElement.removeEventListener('ended', onMediaEnded);
+    }
+
+    if (generationProgressInterval) {
+      clearInterval(generationProgressInterval);
+      generationProgressInterval = null;
+    }
+
+    ssGenerateBtn.style.display = 'inline-flex';
+    ssStopGenerateBtn.style.display = 'none';
+
+    renderSubtitles();
+  }
+
   // ===== INIT =====
   renderSubtitles();
 

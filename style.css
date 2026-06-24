@@ -489,6 +489,29 @@ html[data-theme="light"] .ss-import-confirm-btn{background:var(--green);color:wh
 html[data-theme="light"] .ss-paste-btn{background:var(--green);color:white}
 .ss-paste-btn:hover{opacity:0.9;transform:translateY(-1px)}
 
+/* Upload Section */
+.ss-upload-section{border:1px solid var(--line);border-radius:13px;background:var(--panel);box-shadow:0 10px 30px var(--shadow);padding:20px 24px}
+.ss-dropzone{border:2px dashed var(--line);border-radius:13px;padding:48px 28px;text-align:center;cursor:pointer;transition:all 0.3s;background:rgba(255,255,255,.015)}
+.ss-dropzone:hover,.ss-dropzone.dragover{border-color:var(--accent);background:rgba(245,178,58,.04)}
+html[data-theme="light"] .ss-dropzone:hover,html[data-theme="light"] .ss-dropzone.dragover{background:rgba(20,91,54,.04)}
+.ss-media-area{margin-top:16px}
+.ss-media-file-info{border:1px solid var(--line);border-radius:10px;padding:14px 18px;background:var(--card);margin-bottom:14px}
+.ss-media-player{margin-bottom:14px}
+.ss-media-player audio,.ss-media-player video{width:100%;border-radius:10px;outline:none;background:#111}
+.ss-media-player video{max-height:320px}
+.ss-generate-controls{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.ss-generate-file-btn{height:44px;padding:0 28px;border-radius:8px;border:none;background:linear-gradient(135deg,var(--accent2),var(--accent));color:#111;font-size:14px;font-weight:800;cursor:pointer;transition:all 0.2s}
+html[data-theme="light"] .ss-generate-file-btn{background:var(--green);color:white}
+.ss-generate-file-btn:hover{opacity:0.9;transform:translateY(-1px)}
+.ss-stop-generate-btn{height:44px;padding:0 24px;border-radius:8px;border:1px solid var(--danger);background:rgba(200,33,24,.1);color:var(--danger);font-size:14px;font-weight:800;cursor:pointer;transition:all 0.2s}
+.ss-stop-generate-btn:hover{background:rgba(200,33,24,.2)}
+.ss-generate-progress{margin-bottom:12px}
+.ss-generate-progress .progress-bar{height:6px;border-radius:3px;background:var(--line);overflow:hidden}
+.ss-generate-progress .progress-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--accent2),var(--accent));transition:width 0.3s}
+.ss-progress-text{display:inline-block;margin-top:6px;font-size:12px;font-weight:700;color:var(--muted);font-family:monospace}
+.ss-media-note{font-size:12px;color:var(--muted);line-height:1.6;margin-top:10px;padding:10px 14px;border-radius:8px;background:rgba(245,178,58,.05);border:1px solid rgba(245,178,58,.15)}
+html[data-theme="light"] .ss-media-note{background:rgba(20,91,54,.03);border-color:rgba(20,91,54,.12)}
+
 /* Subtitle Cards List */
 .ss-cards-list{padding:16px 20px;display:flex;flex-direction:column;gap:12px;max-height:520px;overflow-y:auto}
 .ss-cards-list::-webkit-scrollbar{width:5px}
