@@ -34,7 +34,7 @@
   <div><h1>Speech to Text</h1><p class="sub">Convert your audio or video to accurate text in seconds.</p></div>
   <div class="actions">
     <button class="btn themeBtn" id="themeBtn">&#9788;</button>
-    <button class="btn">&#10068; Help</button>
+    <button class="btn" id="helpBtn">&#10068; Help</button>
     <div class="brand">&#129689; &nbsp; SQUICKY</div>
     <div class="theme-label" id="themeLabel">Change Theme</div>
     <div class="theme-menu" id="themeMenu">
@@ -238,6 +238,39 @@
   btn.addEventListener('click',openMenu);
   overlay.addEventListener('click',closeMenu);
   closeBtn.addEventListener('click',closeMenu);
+})();
+</script>
+<div class="help-overlay" id="helpOverlay">
+  <div class="help-modal">
+    <div class="help-header">
+      <span class="help-title">Speech Engine - Help</span>
+      <button class="help-close" id="helpClose">&#10005;</button>
+    </div>
+    <div class="help-body">
+      <ul>
+        <li><b>Live Recording:</b> Click Start to begin recording. Speak clearly into your microphone.</li>
+        <li><b>Pause/Stop:</b> Use Pause to temporarily halt, Stop to finish recording.</li>
+        <li><b>Language:</b> Select your language before starting. Change requires restart.</li>
+        <li><b>Upload File:</b> Switch to Upload tab, drag and drop or browse audio/video files.</li>
+        <li><b>Note:</b> Browser processes audio locally. No data is sent to any server.</li>
+        <li>Transcript appears in real-time on the right panel.</li>
+        <li>Use Copy/Download buttons to save your transcript.</li>
+      </ul>
+    </div>
+    <div class="help-footer">Press Escape or click outside to close</div>
+  </div>
+</div>
+<script>
+(function(){
+  var helpBtn=document.getElementById('helpBtn');
+  var helpOverlay=document.getElementById('helpOverlay');
+  var helpClose=document.getElementById('helpClose');
+  function openHelp(){helpOverlay.classList.add('open');}
+  function closeHelp(){helpOverlay.classList.remove('open');}
+  helpBtn.addEventListener('click',openHelp);
+  helpClose.addEventListener('click',closeHelp);
+  helpOverlay.addEventListener('click',function(e){if(e.target===helpOverlay)closeHelp();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeHelp();});
 })();
 </script>
 </body>

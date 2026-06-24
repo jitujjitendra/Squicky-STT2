@@ -34,7 +34,7 @@
   <div><h1>Content Studio</h1><p class="sub">Transform your transcripts into blogs, summaries, FAQs, notes, articles, and social posts.</p></div>
   <div class="actions">
     <button class="btn themeBtn" id="themeBtn">&#9788;</button>
-    <button class="btn">&#10068; Help</button>
+    <button class="btn" id="helpBtn">&#10068; Help</button>
     <div class="brand">&#129689; &nbsp; SQUICKY</div>
     <div class="theme-label" id="themeLabel">Change Theme</div>
     <div class="theme-menu" id="themeMenu">
@@ -112,6 +112,38 @@
   btn.addEventListener('click',openMenu);
   overlay.addEventListener('click',closeMenu);
   closeBtn.addEventListener('click',closeMenu);
+})();
+</script>
+<div class="help-overlay" id="helpOverlay">
+  <div class="help-modal">
+    <div class="help-header">
+      <span class="help-title">Content Studio - Help</span>
+      <button class="help-close" id="helpClose">&#10005;</button>
+    </div>
+    <div class="help-body">
+      <ul>
+        <li><b>Load Source:</b> Select transcript source and click Load.</li>
+        <li><b>Choose Tab:</b> Select output type (Blog, Summary, FAQ, Notes, Article, Social).</li>
+        <li><b>Generate:</b> Click Generate to create content from your transcript.</li>
+        <li><b>Edit:</b> Generated content is editable - click and modify as needed.</li>
+        <li><b>Copy/Download:</b> Save the generated content.</li>
+        <li><b>Note:</b> Content is generated using text analysis, not AI.</li>
+      </ul>
+    </div>
+    <div class="help-footer">Press Escape or click outside to close</div>
+  </div>
+</div>
+<script>
+(function(){
+  var helpBtn=document.getElementById('helpBtn');
+  var helpOverlay=document.getElementById('helpOverlay');
+  var helpClose=document.getElementById('helpClose');
+  function openHelp(){helpOverlay.classList.add('open');}
+  function closeHelp(){helpOverlay.classList.remove('open');}
+  helpBtn.addEventListener('click',openHelp);
+  helpClose.addEventListener('click',closeHelp);
+  helpOverlay.addEventListener('click',function(e){if(e.target===helpOverlay)closeHelp();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeHelp();});
 })();
 </script>
 </body>

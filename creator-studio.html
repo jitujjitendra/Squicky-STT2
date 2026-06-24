@@ -34,7 +34,7 @@
   <div><h1>Creator Studio</h1><p class="sub">Generate YouTube titles, descriptions, tags, chapters, shorts ideas, and podcast notes from your transcripts.</p></div>
   <div class="actions">
     <button class="btn themeBtn" id="themeBtn">&#9788;</button>
-    <button class="btn">&#10068; Help</button>
+    <button class="btn" id="helpBtn">&#10068; Help</button>
     <div class="brand">&#129689; &nbsp; SQUICKY</div>
     <div class="theme-label" id="themeLabel">Change Theme</div>
     <div class="theme-menu" id="themeMenu">
@@ -112,6 +112,39 @@
   btn.addEventListener('click',openMenu);
   overlay.addEventListener('click',closeMenu);
   closeBtn.addEventListener('click',closeMenu);
+})();
+</script>
+<div class="help-overlay" id="helpOverlay">
+  <div class="help-modal">
+    <div class="help-header">
+      <span class="help-title">Creator Studio - Help</span>
+      <button class="help-close" id="helpClose">&#10005;</button>
+    </div>
+    <div class="help-body">
+      <ul>
+        <li>Load your content transcript from any source.</li>
+        <li><b>YouTube Title:</b> Generates 3-5 catchy title options.</li>
+        <li><b>Description:</b> Creates SEO-friendly YouTube description.</li>
+        <li><b>Tags:</b> Extracts keywords as comma-separated tags.</li>
+        <li><b>Chapters:</b> Auto-generates YouTube chapter timestamps.</li>
+        <li><b>Shorts Ideas:</b> Finds short punchy quotes for YouTube Shorts.</li>
+        <li><b>Podcast Notes:</b> Creates show notes format.</li>
+      </ul>
+    </div>
+    <div class="help-footer">Press Escape or click outside to close</div>
+  </div>
+</div>
+<script>
+(function(){
+  var helpBtn=document.getElementById('helpBtn');
+  var helpOverlay=document.getElementById('helpOverlay');
+  var helpClose=document.getElementById('helpClose');
+  function openHelp(){helpOverlay.classList.add('open');}
+  function closeHelp(){helpOverlay.classList.remove('open');}
+  helpBtn.addEventListener('click',openHelp);
+  helpClose.addEventListener('click',closeHelp);
+  helpOverlay.addEventListener('click',function(e){if(e.target===helpOverlay)closeHelp();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeHelp();});
 })();
 </script>
 </body>

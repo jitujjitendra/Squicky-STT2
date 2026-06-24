@@ -34,7 +34,7 @@
   <div><h1>Subtitle Studio</h1><p class="sub">Generate, edit, and export subtitles in SRT and VTT formats.</p></div>
   <div class="actions">
     <button class="btn themeBtn" id="themeBtn">&#9788;</button>
-    <button class="btn">&#10068; Help</button>
+    <button class="btn" id="helpBtn">&#10068; Help</button>
     <div class="brand">&#129689; &nbsp; SQUICKY</div>
     <div class="theme-label" id="themeLabel">Change Theme</div>
     <div class="theme-menu" id="themeMenu">
@@ -126,6 +126,39 @@
   btn.addEventListener('click',openMenu);
   overlay.addEventListener('click',closeMenu);
   closeBtn.addEventListener('click',closeMenu);
+})();
+</script>
+<div class="help-overlay" id="helpOverlay">
+  <div class="help-modal">
+    <div class="help-header">
+      <span class="help-title">Subtitle Studio - Help</span>
+      <button class="help-close" id="helpClose">&#10005;</button>
+    </div>
+    <div class="help-body">
+      <ul>
+        <li><b>Import:</b> Click "Import Transcript" to load from Speech Engine or Transcript Studio.</li>
+        <li>Or paste text directly in the text area and click "Generate Subtitles".</li>
+        <li><b>Edit:</b> Change text and timing in each subtitle card.</li>
+        <li><b>Split:</b> Place cursor in text, click Split to divide into two subtitles.</li>
+        <li><b>Merge:</b> Click Merge to combine a subtitle with the one below it.</li>
+        <li><b>Preview:</b> Click Play to see subtitles appear in sequence.</li>
+        <li><b>Export:</b> Use Export SRT or Export VTT buttons.</li>
+      </ul>
+    </div>
+    <div class="help-footer">Press Escape or click outside to close</div>
+  </div>
+</div>
+<script>
+(function(){
+  var helpBtn=document.getElementById('helpBtn');
+  var helpOverlay=document.getElementById('helpOverlay');
+  var helpClose=document.getElementById('helpClose');
+  function openHelp(){helpOverlay.classList.add('open');}
+  function closeHelp(){helpOverlay.classList.remove('open');}
+  helpBtn.addEventListener('click',openHelp);
+  helpClose.addEventListener('click',closeHelp);
+  helpOverlay.addEventListener('click',function(e){if(e.target===helpOverlay)closeHelp();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeHelp();});
 })();
 </script>
 </body>

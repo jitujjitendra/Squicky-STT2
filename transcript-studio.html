@@ -34,7 +34,7 @@
   <div><h1>Transcript Studio</h1><p class="sub">Edit, search, and annotate your transcripts with speaker labels and timestamps.</p></div>
   <div class="actions">
     <button class="btn themeBtn" id="themeBtn">&#9788;</button>
-    <button class="btn">&#10068; Help</button>
+    <button class="btn" id="helpBtn">&#10068; Help</button>
     <div class="brand">&#129689; &nbsp; SQUICKY</div>
     <div class="theme-label" id="themeLabel">Change Theme</div>
     <div class="theme-menu" id="themeMenu">
@@ -151,6 +151,39 @@
   btn.addEventListener('click',openMenu);
   overlay.addEventListener('click',closeMenu);
   closeBtn.addEventListener('click',closeMenu);
+})();
+</script>
+<div class="help-overlay" id="helpOverlay">
+  <div class="help-modal">
+    <div class="help-header">
+      <span class="help-title">Transcript Studio - Help</span>
+      <button class="help-close" id="helpClose">&#10005;</button>
+    </div>
+    <div class="help-body">
+      <ul>
+        <li><b>Edit:</b> Click anywhere in the transcript to edit text directly.</li>
+        <li><b>Search:</b> Click Search button or press Ctrl+F to find and replace text.</li>
+        <li><b>Speakers:</b> Click Speakers, select a speaker, click in a paragraph, then Assign.</li>
+        <li><b>Timestamps:</b> Click Timestamps to insert time markers. Use Auto-Calculate with duration.</li>
+        <li><b>Copy:</b> Use Copy All or Copy Selected. Toggle timestamps/speakers inclusion.</li>
+        <li><b>Auto-Save:</b> Your edits are saved automatically to browser storage.</li>
+        <li><b>Undo/Redo:</b> Use toolbar buttons or Ctrl+Z / Ctrl+Y.</li>
+      </ul>
+    </div>
+    <div class="help-footer">Press Escape or click outside to close</div>
+  </div>
+</div>
+<script>
+(function(){
+  var helpBtn=document.getElementById('helpBtn');
+  var helpOverlay=document.getElementById('helpOverlay');
+  var helpClose=document.getElementById('helpClose');
+  function openHelp(){helpOverlay.classList.add('open');}
+  function closeHelp(){helpOverlay.classList.remove('open');}
+  helpBtn.addEventListener('click',openHelp);
+  helpClose.addEventListener('click',closeHelp);
+  helpOverlay.addEventListener('click',function(e){if(e.target===helpOverlay)closeHelp();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeHelp();});
 })();
 </script>
 </body>

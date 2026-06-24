@@ -34,7 +34,7 @@
   <div><h1>Business Studio</h1><p class="sub">Generate sales summaries, customer notes, CRM entries, follow-ups, and risk/opportunity analysis.</p></div>
   <div class="actions">
     <button class="btn themeBtn" id="themeBtn">&#9788;</button>
-    <button class="btn">&#10068; Help</button>
+    <button class="btn" id="helpBtn">&#10068; Help</button>
     <div class="brand">&#129689; &nbsp; SQUICKY</div>
     <div class="theme-label" id="themeLabel">Change Theme</div>
     <div class="theme-menu" id="themeMenu">
@@ -111,6 +111,39 @@
   btn.addEventListener('click',openMenu);
   overlay.addEventListener('click',closeMenu);
   closeBtn.addEventListener('click',closeMenu);
+})();
+</script>
+<div class="help-overlay" id="helpOverlay">
+  <div class="help-modal">
+    <div class="help-header">
+      <span class="help-title">Business Studio - Help</span>
+      <button class="help-close" id="helpClose">&#10005;</button>
+    </div>
+    <div class="help-body">
+      <ul>
+        <li>Load your business call transcript from any source.</li>
+        <li><b>Sales Summary:</b> Professional summary of the call.</li>
+        <li><b>Customer Notes:</b> Extracts customer mentions and pain points.</li>
+        <li><b>CRM Notes:</b> Short bullet-point notes ready for CRM.</li>
+        <li><b>Follow-ups:</b> Extracts next steps and action items.</li>
+        <li><b>Risks/Opportunities:</b> Identifies concerns and positive signals.</li>
+        <li>Best with sales call or client meeting transcripts.</li>
+      </ul>
+    </div>
+    <div class="help-footer">Press Escape or click outside to close</div>
+  </div>
+</div>
+<script>
+(function(){
+  var helpBtn=document.getElementById('helpBtn');
+  var helpOverlay=document.getElementById('helpOverlay');
+  var helpClose=document.getElementById('helpClose');
+  function openHelp(){helpOverlay.classList.add('open');}
+  function closeHelp(){helpOverlay.classList.remove('open');}
+  helpBtn.addEventListener('click',openHelp);
+  helpClose.addEventListener('click',closeHelp);
+  helpOverlay.addEventListener('click',function(e){if(e.target===helpOverlay)closeHelp();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeHelp();});
 })();
 </script>
 </body>
