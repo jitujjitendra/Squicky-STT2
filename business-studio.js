@@ -53,6 +53,7 @@
   const copyOutputBtn = document.getElementById('copyOutputBtn');
   const downloadOutputBtn = document.getElementById('downloadOutputBtn');
   const tabs = document.querySelectorAll('.bs-tab');
+  const directInput = document.getElementById('directInput');
 
   let currentTranscript = '';
   let currentType = 'sales';
@@ -114,8 +115,13 @@
 
   // === Content Generation ===
   function generateContent() {
+    const directText = directInput.value.trim();
+    if (directText) {
+      currentTranscript = directText;
+    }
+
     if (!currentTranscript) {
-      showToast('Please load a transcript first');
+      showToast('Please load a transcript or paste text directly');
       return;
     }
 

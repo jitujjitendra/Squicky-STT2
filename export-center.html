@@ -75,7 +75,14 @@
   <div class="ec-no-transcript" id="ecNoTranscript" style="display:none;">
     <div class="ec-no-icon">&#128196;</div>
     <h3>No Transcript Available</h3>
-    <p>Record or upload audio in the <a href="index.html">Speech Engine</a>, or edit a transcript in the <a href="transcript-studio.html">Transcript Studio</a> to get started.</p>
+    <p>Record or upload audio in the <a href="index.html">Speech Engine</a>, edit a transcript in the <a href="transcript-studio.html">Transcript Studio</a>, or paste text below to get started.</p>
+  </div>
+
+  <!-- Paste Transcript Section -->
+  <div class="ec-paste-section" id="ecPasteSection" style="margin-bottom:18px;">
+    <h3 class="ec-section-title">&#128203; Paste Transcript</h3>
+    <textarea id="pasteTranscriptInput" placeholder="Paste your transcript text here..." style="width:100%;min-height:120px;padding:14px;font-size:13px;font-family:inherit;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--text);resize:vertical;margin-top:10px;box-sizing:border-box;"></textarea>
+    <button class="ec-export-btn" id="usePastedTextBtn" style="margin-top:10px;padding:10px 20px;border-radius:8px;border:none;background:var(--accent);color:#fff;font-weight:700;font-size:13px;cursor:pointer;">&#9654; Use Pasted Text</button>
   </div>
 
   <!-- Export Options Panel -->

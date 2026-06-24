@@ -36,6 +36,8 @@ const previewContent = document.getElementById('previewContent');
 
 // Buttons
 const exportAllBtn = document.getElementById('exportAllBtn');
+const usePastedTextBtn = document.getElementById('usePastedTextBtn');
+const pasteTranscriptInput = document.getElementById('pasteTranscriptInput');
 
 // ===== STATE =====
 let transcriptSegments = []; // Array of { speaker, timestamp, text }
@@ -660,6 +662,28 @@ document.querySelectorAll('.ec-format-card').forEach(card => {
 
 // Export All
 exportAllBtn.addEventListener('click', exportAll);
+
+// Use Pasted Text
+usePastedTextBtn.addEventListener('click', () => {
+    const text = pasteTranscriptInput.value.trim();
+    if (!text) {
+        showToast('Please paste some text first');
+        return;
+    }
+    transcriptSegments = [];
+    transcriptSpeakers = [];
+    parsePlainText(text);
+    transcriptSource = 'Pasted Text';
+
+    ecNoTranscript.style.display = 'none';
+    ecSummary.style.display = 'flex';
+    ecOptions.style.display = 'block';
+    ecFormats.style.display = 'block';
+    ecPreview.style.display = 'block';
+    updateSummary();
+    updatePreview('txt');
+    showToast('Pasted text loaded successfully!');
+});
 
 // Preview tabs
 document.querySelectorAll('.ec-preview-tab').forEach(tab => {
