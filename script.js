@@ -76,6 +76,7 @@ let micStream = null;
 let levelAnimFrame = null;
 let isProcessingFile = false;
 let fileRecognition = null;
+let currentFileAudioUrl = null;
 
 // ===== THEME SWITCHING =====
 function toggleMenu() {
@@ -689,6 +690,7 @@ function processUploadedFile() {
 
     // Create audio element to play the file
     const audioUrl = URL.createObjectURL(uploadedFile);
+    currentFileAudioUrl = audioUrl;
     const audio = document.createElement('audio');
     audio.src = audioUrl;
     audio.crossOrigin = 'anonymous';
@@ -789,8 +791,9 @@ function finishFileProcessing(statusInterval) {
 
     // Auto-clear file data for privacy (keep transcript)
     setTimeout(() => {
-        if (uploadedFile) {
-            URL.revokeObjectURL(URL.createObjectURL(uploadedFile));
+        if (currentFileAudioUrl) {
+            URL.revokeObjectURL(currentFileAudioUrl);
+            currentFileAudioUrl = null;
         }
     }, 1000);
 }

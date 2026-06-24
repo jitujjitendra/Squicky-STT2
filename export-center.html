@@ -9,20 +9,22 @@
 <link rel="icon" href="Squicky Logo.png" type="image/png">
 </head>
 <body>
+<button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu">&#9776;</button>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
 <div class="app">
 <aside class="sidebar">
+  <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close menu">&#10005;</button>
   <div class="logo"><img src="Squicky Logo.png" alt="Squicky Logo"></div>
   <nav class="menu">
-    <a href="transcript-studio.html"><span class="ico">&#127897;</span> Speech to Text</a>
-    <a href="index.html"><span class="ico">&#12349;</span> Live Speech to Text <span class="badge">LIVE</span></a>
+    <a href="transcript-studio.html"><span class="ico">&#127897;</span> Transcript Studio</a>
+    <a href="index.html"><span class="ico">&#12349;</span> Live STT <span class="badge">LIVE</span></a>
     <a href="subtitle-studio.html"><span class="ico">&#9635;</span> Subtitle Generator</a>
-    <a href="content-studio.html"><span class="ico">&#9636;</span> Audio Summary</a>
-    <a href="content-studio.html"><span class="ico">&#9639;</span> Blog Generator</a>
-    <a href="export-center.html" class="active"><span class="ico">&#8634;</span> Export History</a>
-    <a href="meeting-intelligence.html"><span class="ico">?</span> How It Works</a>
-    <a href="creator-studio.html"><span class="ico">&#9638;</span> Tools</a>
-    <a href="#"><span class="ico">&#128737;</span> Privacy</a>
-    <a href="business-studio.html"><span class="ico">&#9432;</span> About Squicky</a>
+    <a href="content-studio.html"><span class="ico">&#9636;</span> Content Studio</a>
+    <a href="export-center.html" class="active"><span class="ico">&#8634;</span> Export Center</a>
+    <a href="meeting-intelligence.html"><span class="ico">?</span> Meeting Intelligence</a>
+    <a href="creator-studio.html"><span class="ico">&#9638;</span> Creator Studio</a>
+    <a href="business-studio.html"><span class="ico">&#128737;</span> Business Studio</a>
+    <a href="#"><span class="ico">&#9432;</span> Privacy &amp; Info</a>
   </nav>
   <div class="privacy"><b>&#128737; Privacy First</b>Your files are processed temporarily and automatically deleted. We don't store your data. No login required.</div>
 </aside>
@@ -179,5 +181,18 @@
 
 <div class="toast" id="toast"></div>
 <script src="export-center.js"></script>
+<script>
+(function(){
+  var btn=document.getElementById('mobileMenuBtn');
+  var overlay=document.getElementById('sidebarOverlay');
+  var sidebar=document.querySelector('.sidebar');
+  var closeBtn=document.getElementById('sidebarCloseBtn');
+  function openMenu(){sidebar.classList.add('open');overlay.classList.add('active');}
+  function closeMenu(){sidebar.classList.remove('open');overlay.classList.remove('active');}
+  btn.addEventListener('click',openMenu);
+  overlay.addEventListener('click',closeMenu);
+  closeBtn.addEventListener('click',closeMenu);
+})();
+</script>
 </body>
 </html>
