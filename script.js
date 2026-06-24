@@ -283,6 +283,9 @@ function initRecognition() {
         } else if (event.error === 'no-speech') {
             // Don't stop, just notify briefly
             recStatus.textContent = 'No speech detected...';
+        } else if (event.error === 'language-not-supported') {
+            showToast('This language is not supported on your device. Try English.');
+            stopRecording();
         } else if (event.error === 'network') {
             showToast('Network error. Check your connection.');
             stopRecording();
@@ -296,20 +299,19 @@ function initRecognition() {
     recog.onend = () => {
         // Auto-reconnect for continuous mode
         if (isRecording && !isPaused) {
-            try {
-                // For hinglish, alternate between hi-IN and en-IN
-                if (languageSelect.value === 'hinglish') {
-                    recog.lang = recog.lang === 'hi-IN' ? 'en-IN' : 'hi-IN';
-                }
-                recog.start();
-            } catch (e) {
-                // If start fails, try again after a short delay
-                setTimeout(() => {
-                    if (isRecording && !isPaused) {
-                        try { recog.start(); } catch (err) { stopRecording(); }
+            // Create fresh recognition instance to avoid duplicate results on mobile
+            setTimeout(() => {
+                if (isRecording && !isPaused) {
+                    try {
+                        recognition = initRecognition();
+                        if (recognition) {
+                            recognition.start();
+                        }
+                    } catch (err) {
+                        stopRecording();
                     }
-                }, 300);
-            }
+                }
+            }, 200);
         }
     };
 
