@@ -139,6 +139,8 @@ liveTab.addEventListener('click', () => switchTab('live'));
 
 // ===== TIMER =====
 function startTimer() {
+    // Prevent multiple intervals
+    if (timerInterval) return;
     timerInterval = setInterval(() => {
         seconds++;
         const h = String(Math.floor(seconds / 3600)).padStart(2, '0');
@@ -149,8 +151,10 @@ function startTimer() {
 }
 
 function stopTimer() {
-    clearInterval(timerInterval);
-    timerInterval = null;
+    if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+    }
 }
 
 function resetTimer() {
@@ -248,8 +252,9 @@ function initRecognition() {
         micOuter.classList.add('recording');
         recStatus.textContent = 'Listening...';
         recStatus.className = 'rec-status listening';
-        startTimer();
-        startAudioLevel();
+        // Only start timer/audio if not already running (prevents duplicates on auto-reconnect)
+        if (!timerInterval) startTimer();
+        if (!audioLevel.classList.contains('active')) startAudioLevel();
     };
 
     recog.onresult = (event) => {
@@ -313,22 +318,7 @@ function initRecognition() {
 // ===== RECORDING CONTROLS =====
 function startRecording() {
     if (isRecording) return;
-
-    // Check for mic permission first
-    if (navigator.permissions) {
-        navigator.permissions.query({ name: 'microphone' }).then(result => {
-            if (result.state === 'denied') {
-                showToast('Microphone permission is blocked. Please enable it in browser settings.');
-                return;
-            }
-            doStartRecording();
-        }).catch(() => {
-            // permissions API not supported, try directly
-            doStartRecording();
-        });
-    } else {
-        doStartRecording();
-    }
+    doStartRecording();
 }
 
 function doStartRecording() {
@@ -337,10 +327,9 @@ function doStartRecording() {
     recognition.lang = getRecognitionLang(languageSelect.value);
     try {
         recognition.start();
-        showToast('Recording started');
     } catch (e) {
         console.error('Failed to start:', e);
-        showToast('Failed to start recording');
+        showToast('Failed to start recording. Check mic permission.');
     }
 }
 
@@ -358,8 +347,6 @@ function pauseRecording() {
                 console.error('Failed to resume:', e);
             }
         }
-        startTimer();
-        startAudioLevel();
         recDot.style.display = 'inline';
         liveLabel.style.display = 'inline';
         micOuter.classList.add('recording');
