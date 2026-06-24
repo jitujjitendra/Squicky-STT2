@@ -219,6 +219,79 @@ html[data-theme="dark"] .download,html[data-theme="medium"] .download{background
 .transBox::-webkit-scrollbar-track{background:transparent}
 .transBox::-webkit-scrollbar-thumb{background:var(--accent);border-radius:3px}
 
+/* ===== TAB PANELS ===== */
+.tab-panel{animation:fadeIn 0.3s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* ===== UPLOAD AREA ===== */
+.upload-area{padding:28px 24px}
+.upload-dropzone{border:2px dashed var(--line);border-radius:13px;padding:48px 28px;text-align:center;cursor:pointer;transition:all 0.3s;background:rgba(255,255,255,.015)}
+.upload-dropzone:hover,.upload-dropzone.dragover{border-color:var(--accent);background:rgba(245,178,58,.04)}
+html[data-theme="light"] .upload-dropzone:hover,html[data-theme="light"] .upload-dropzone.dragover{background:rgba(20,91,54,.04)}
+.upload-icon{font-size:52px;margin-bottom:12px;color:var(--accent)}
+.upload-title{font-size:20px;font-weight:800;margin-bottom:8px}
+.upload-subtitle{font-size:14px;color:var(--muted);margin-bottom:16px}
+.upload-formats{font-size:12px;color:var(--muted);margin-bottom:6px}
+.upload-limit{font-size:12px;color:var(--muted);opacity:0.7;margin-bottom:20px}
+.upload-btn{height:44px;padding:0 28px;border-radius:8px;border:1px solid var(--accent);background:linear-gradient(135deg,var(--accent2),var(--accent));color:#111;font-weight:800;font-size:14px;cursor:pointer;transition:all 0.2s}
+html[data-theme="light"] .upload-btn{background:var(--green);color:white;border-color:var(--green)}
+.upload-btn:hover{opacity:0.9;transform:translateY(-1px)}
+
+/* File Info */
+.file-info{margin-top:20px;border:1px solid var(--line);border-radius:10px;padding:16px 20px;background:var(--card)}
+.file-details{display:flex;align-items:center;gap:14px}
+.file-icon{font-size:32px;width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:rgba(245,178,58,.1);border-radius:10px}
+html[data-theme="light"] .file-icon{background:rgba(20,91,54,.1)}
+.file-meta{flex:1;display:flex;flex-direction:column;gap:3px}
+.file-name{font-size:14px;font-weight:700}
+.file-size{font-size:12px;color:var(--muted)}
+.file-duration{font-size:12px;color:var(--accent2)}
+html[data-theme="light"] .file-duration{color:var(--accent)}
+.file-remove{width:32px;height:32px;border-radius:50%;border:1px solid var(--line);background:var(--btn);color:var(--danger);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s}
+.file-remove:hover{background:rgba(200,33,24,.1);border-color:var(--danger)}
+
+/* Upload Progress */
+.upload-progress{margin-top:14px}
+.progress-bar{height:6px;border-radius:3px;background:var(--line);overflow:hidden}
+.progress-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));width:0;transition:width 0.3s ease}
+html[data-theme="light"] .progress-fill{background:linear-gradient(90deg,var(--accent),var(--accent2))}
+.progress-text{font-size:12px;color:var(--muted);margin-top:6px;display:block}
+
+/* Processing Status */
+.processing-status{margin-top:20px;display:flex;align-items:center;gap:12px;padding:16px;border:1px solid var(--accent);border-radius:10px;background:rgba(245,178,58,.05)}
+html[data-theme="light"] .processing-status{border-color:var(--accent);background:rgba(20,91,54,.05)}
+.processing-spinner{width:24px;height:24px;border:3px solid var(--line);border-top-color:var(--accent);border-radius:50%;animation:spin 0.8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.processing-text{font-size:14px;font-weight:700;color:var(--accent2)}
+html[data-theme="light"] .processing-text{color:var(--accent)}
+
+/* Upload Actions */
+.upload-actions{margin-top:18px;display:flex;gap:12px;justify-content:center}
+.process-btn{height:44px;padding:0 28px;border-radius:8px;border:none;background:linear-gradient(135deg,var(--accent2),var(--accent));color:#111;font-weight:800;font-size:14px;cursor:pointer;transition:all 0.2s}
+html[data-theme="light"] .process-btn{background:var(--green);color:white}
+.process-btn:hover{opacity:0.9;transform:translateY(-1px)}
+.cancel-btn{height:44px;padding:0 20px;border-radius:8px;border:1px solid var(--line);background:var(--btn);color:var(--text);font-weight:700;font-size:14px;cursor:pointer;transition:all 0.2s}
+.cancel-btn:hover{border-color:var(--danger);color:var(--danger)}
+
+/* Privacy Notice */
+.privacy-notice{margin-top:22px;padding:14px 18px;border:1px solid var(--line);border-radius:9px;background:rgba(255,255,255,.02);font-size:13px;line-height:1.6;color:var(--muted);text-align:center}
+.privacy-notice b{color:var(--accent2)}
+html[data-theme="light"] .privacy-notice b{color:var(--accent)}
+
+/* Upload Transcript */
+.upload-transcript{padding:0 24px 20px}
+
+/* ===== AUDIO LEVEL INDICATOR ===== */
+.audio-level{display:flex;align-items:flex-end;justify-content:center;gap:3px;height:28px;margin:8px 0 4px;opacity:0;transition:opacity 0.3s}
+.audio-level.active{opacity:1}
+.level-bar{width:4px;height:4px;min-height:4px;border-radius:2px;background:var(--accent);transition:height 0.1s ease}
+
+/* ===== RECORDING STATUS ===== */
+.rec-status{font-size:13px;font-weight:700;color:var(--muted);margin-bottom:12px;transition:color 0.3s}
+.rec-status.listening{color:var(--accent2)}
+html[data-theme="light"] .rec-status.listening{color:var(--accent)}
+.rec-status.processing{color:var(--accent)}
+
 /* ===== RESPONSIVE ===== */
 @media(max-width:1100px){
   .app{grid-template-columns:1fr}
@@ -226,6 +299,8 @@ html[data-theme="dark"] .download,html[data-theme="medium"] .download{background
   .main{max-width:100%;padding:22px}
   .studio,.lower{grid-template-columns:1fr}
   .left{border-right:0;border-bottom:1px solid var(--line);padding:0 0 20px}
+  .upload-area{padding:20px 16px}
+  .upload-dropzone{padding:32px 16px}
 }
 @media(max-width:720px){
   .header{display:block}
@@ -234,4 +309,7 @@ html[data-theme="dark"] .download,html[data-theme="medium"] .download{background
   .tabs,.settings,.cards{grid-template-columns:1fr}
   .setting{border-right:0;border-bottom:1px solid var(--line)}
   .footer{height:auto;gap:10px;flex-direction:column;padding:14px;text-align:center}
+  .upload-formats{font-size:11px}
+  .upload-actions{flex-direction:column;align-items:stretch}
+  .file-details{flex-wrap:wrap}
 }
