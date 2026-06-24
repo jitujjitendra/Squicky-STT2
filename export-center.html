@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Squicky STT - Export Center</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="Squicky Logo.png" type="image/png">
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+  <div class="logo"><img src="Squicky Logo.png" alt="Squicky Logo"></div>
+  <nav class="menu">
+    <a href="transcript-studio.html"><span class="ico">&#127897;</span> Speech to Text</a>
+    <a href="index.html"><span class="ico">&#12349;</span> Live Speech to Text <span class="badge">LIVE</span></a>
+    <a href="#"><span class="ico">&#9635;</span> Subtitle Generator</a>
+    <a href="#"><span class="ico">&#9636;</span> Audio Summary</a>
+    <a href="#"><span class="ico">&#9639;</span> Blog Generator</a>
+    <a href="export-center.html" class="active"><span class="ico">&#8634;</span> Export History</a>
+    <a href="#"><span class="ico">?</span> How It Works</a>
+    <a href="#"><span class="ico">&#9638;</span> Tools</a>
+    <a href="#"><span class="ico">&#128737;</span> Privacy</a>
+    <a href="#"><span class="ico">&#9432;</span> About Squicky</a>
+  </nav>
+  <div class="privacy"><b>&#128737; Privacy First</b>Your files are processed temporarily and automatically deleted. We don't store your data. No login required.</div>
+</aside>
+
+<main class="main">
+<header class="header">
+  <div><h1>Export Center</h1><p class="sub">Export your transcripts in multiple formats with one click.</p></div>
+  <div class="actions">
+    <button class="btn themeBtn" id="themeBtn">&#9788;</button>
+    <button class="btn">&#10068; Help</button>
+    <div class="brand">&#129689; &nbsp; SQUICKY</div>
+    <div class="theme-label" id="themeLabel">Change Theme</div>
+    <div class="theme-menu" id="themeMenu">
+      <small>Choose Theme</small>
+      <div class="theme-option active" data-theme="dark">&#9790; Dark <span>&#10003;</span></div>
+      <div class="theme-option" data-theme="medium">&#9673; Medium <span></span></div>
+      <div class="theme-option" data-theme="light">&#9788; Light <span></span></div>
+    </div>
+  </div>
+</header>
+
+<section class="ec-container">
+  <!-- Transcript Summary -->
+  <div class="ec-summary" id="ecSummary">
+    <div class="ec-summary-item">
+      <span class="ec-summary-label">Words</span>
+      <span class="ec-summary-value" id="summaryWords">0</span>
+    </div>
+    <div class="ec-summary-item">
+      <span class="ec-summary-label">Characters</span>
+      <span class="ec-summary-value" id="summaryChars">0</span>
+    </div>
+    <div class="ec-summary-item">
+      <span class="ec-summary-label">Est. Duration</span>
+      <span class="ec-summary-value" id="summaryDuration">0:00</span>
+    </div>
+    <div class="ec-summary-item">
+      <span class="ec-summary-label">Speakers</span>
+      <span class="ec-summary-value" id="summarySpeakers">0</span>
+    </div>
+    <div class="ec-summary-item">
+      <span class="ec-summary-label">Source</span>
+      <span class="ec-summary-value" id="summarySource">-</span>
+    </div>
+  </div>
+
+  <!-- No Transcript Message -->
+  <div class="ec-no-transcript" id="ecNoTranscript" style="display:none;">
+    <div class="ec-no-icon">&#128196;</div>
+    <h3>No Transcript Available</h3>
+    <p>Record or upload audio in the <a href="index.html">Speech Engine</a>, or edit a transcript in the <a href="transcript-studio.html">Transcript Studio</a> to get started.</p>
+  </div>
+
+  <!-- Export Options Panel -->
+  <div class="ec-options" id="ecOptions">
+    <h3 class="ec-section-title">Export Options</h3>
+    <div class="ec-options-grid">
+      <label class="ec-option-toggle"><input type="checkbox" id="optTimestamps" checked> Include Timestamps</label>
+      <label class="ec-option-toggle"><input type="checkbox" id="optSpeakers" checked> Include Speaker Labels</label>
+      <label class="ec-option-toggle"><input type="checkbox" id="optTitle" checked> Include Title/Header</label>
+      <label class="ec-option-toggle"><input type="checkbox" id="optMetadata" checked> Include Metadata</label>
+    </div>
+    <div class="ec-title-input">
+      <label>Document Title:</label>
+      <input type="text" id="exportTitle" placeholder="My Transcript" value="Squicky Transcript">
+    </div>
+  </div>
+
+  <!-- Format Selection Grid -->
+  <div class="ec-formats" id="ecFormats">
+    <h3 class="ec-section-title">Choose Format</h3>
+    <div class="ec-format-grid">
+      <div class="ec-format-card" data-format="txt">
+        <div class="ec-format-icon">&#128196;</div>
+        <div class="ec-format-info">
+          <b>TXT</b>
+          <span>Plain Text</span>
+        </div>
+        <button class="ec-export-btn" data-format="txt">Export</button>
+      </div>
+      <div class="ec-format-card" data-format="pdf">
+        <div class="ec-format-icon">&#128203;</div>
+        <div class="ec-format-info">
+          <b>PDF</b>
+          <span>Document</span>
+        </div>
+        <button class="ec-export-btn" data-format="pdf">Export</button>
+      </div>
+      <div class="ec-format-card" data-format="srt">
+        <div class="ec-format-icon">&#9635;</div>
+        <div class="ec-format-info">
+          <b>SRT</b>
+          <span>SubRip Subtitle</span>
+        </div>
+        <button class="ec-export-btn" data-format="srt">Export</button>
+      </div>
+      <div class="ec-format-card" data-format="vtt">
+        <div class="ec-format-icon">&#9635;</div>
+        <div class="ec-format-info">
+          <b>VTT</b>
+          <span>WebVTT Subtitle</span>
+        </div>
+        <button class="ec-export-btn" data-format="vtt">Export</button>
+      </div>
+      <div class="ec-format-card" data-format="json">
+        <div class="ec-format-icon">&#123;&#125;</div>
+        <div class="ec-format-info">
+          <b>JSON</b>
+          <span>Structured Data</span>
+        </div>
+        <button class="ec-export-btn" data-format="json">Export</button>
+      </div>
+      <div class="ec-format-card" data-format="csv">
+        <div class="ec-format-icon">&#128202;</div>
+        <div class="ec-format-info">
+          <b>CSV</b>
+          <span>Spreadsheet</span>
+        </div>
+        <button class="ec-export-btn" data-format="csv">Export</button>
+      </div>
+      <div class="ec-format-card" data-format="docx">
+        <div class="ec-format-icon">&#128209;</div>
+        <div class="ec-format-info">
+          <b>DOCX</b>
+          <span>Word Document</span>
+        </div>
+        <button class="ec-export-btn" data-format="docx">Export</button>
+      </div>
+    </div>
+    <div class="ec-export-all-wrap">
+      <button class="ec-export-all-btn" id="exportAllBtn">&#11015; Export All Formats</button>
+    </div>
+  </div>
+
+  <!-- Preview Panel -->
+  <div class="ec-preview" id="ecPreview">
+    <h3 class="ec-section-title">Preview</h3>
+    <div class="ec-preview-tabs">
+      <button class="ec-preview-tab active" data-preview="txt">TXT</button>
+      <button class="ec-preview-tab" data-preview="srt">SRT</button>
+      <button class="ec-preview-tab" data-preview="vtt">VTT</button>
+      <button class="ec-preview-tab" data-preview="json">JSON</button>
+      <button class="ec-preview-tab" data-preview="csv">CSV</button>
+    </div>
+    <div class="ec-preview-box" id="previewBox">
+      <pre id="previewContent">Select a format tab to preview output...</pre>
+    </div>
+  </div>
+</section>
+
+<footer class="footer"><span>&#128737; Privacy First &nbsp; &#8226; &nbsp; No Login &nbsp; &#8226; &nbsp; No Data Storage &nbsp; &#8226; &nbsp; 100% Secure</span><span>Made with &#10084;&#65039; by <b class="gold">Squicky</b></span></footer>
+</main>
+</div>
+
+<div class="toast" id="toast"></div>
+<script src="export-center.js"></script>
+</body>
+</html>
