@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Squicky STT - Subtitle Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="Squicky Logo.png" type="image/png">
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+  <div class="logo"><img src="Squicky Logo.png" alt="Squicky Logo"></div>
+  <nav class="menu">
+    <a href="transcript-studio.html"><span class="ico">&#127897;</span> Speech to Text</a>
+    <a href="index.html"><span class="ico">&#12349;</span> Live Speech to Text <span class="badge">LIVE</span></a>
+    <a href="subtitle-studio.html" class="active"><span class="ico">&#9635;</span> Subtitle Generator</a>
+    <a href="#"><span class="ico">&#9636;</span> Audio Summary</a>
+    <a href="#"><span class="ico">&#9639;</span> Blog Generator</a>
+    <a href="export-center.html"><span class="ico">&#8634;</span> Export History</a>
+    <a href="#"><span class="ico">?</span> How It Works</a>
+    <a href="#"><span class="ico">&#9638;</span> Tools</a>
+    <a href="#"><span class="ico">&#128737;</span> Privacy</a>
+    <a href="#"><span class="ico">&#9432;</span> About Squicky</a>
+  </nav>
+  <div class="privacy"><b>&#128737; Privacy First</b>Your files are processed temporarily and automatically deleted. We don't store your data. No login required.</div>
+</aside>
+
+<main class="main">
+<header class="header">
+  <div><h1>Subtitle Studio</h1><p class="sub">Generate, edit, and export subtitles in SRT and VTT formats.</p></div>
+  <div class="actions">
+    <button class="btn themeBtn" id="themeBtn">&#9788;</button>
+    <button class="btn">&#10068; Help</button>
+    <div class="brand">&#129689; &nbsp; SQUICKY</div>
+    <div class="theme-label" id="themeLabel">Change Theme</div>
+    <div class="theme-menu" id="themeMenu">
+      <small>Choose Theme</small>
+      <div class="theme-option active" data-theme="dark">&#9790; Dark <span>&#10003;</span></div>
+      <div class="theme-option" data-theme="medium">&#9673; Medium <span></span></div>
+      <div class="theme-option" data-theme="light">&#9788; Light <span></span></div>
+    </div>
+  </div>
+</header>
+
+<section class="ss-container">
+  <!-- Top Toolbar -->
+  <div class="ss-toolbar">
+    <div class="ss-toolbar-group">
+      <button class="ss-tool-btn" id="importTranscriptBtn" title="Import from Transcript">&#128196; Import Transcript</button>
+      <button class="ss-tool-btn" id="clearAllBtn" title="Clear All Subtitles">&#128465; Clear All</button>
+    </div>
+    <div class="ss-toolbar-group">
+      <button class="ss-tool-btn ss-export-btn" id="exportSrtBtn" title="Export as SRT">&#11015; Export SRT</button>
+      <button class="ss-tool-btn ss-export-btn" id="exportVttBtn" title="Export as VTT">&#11015; Export VTT</button>
+    </div>
+    <div class="ss-toolbar-group">
+      <div class="ss-subtitle-count" id="subtitleCount">0 subtitles</div>
+    </div>
+  </div>
+
+  <!-- Import Source Selection -->
+  <div class="ss-import-panel" id="importPanel" style="display:none;">
+    <div class="ss-import-row">
+      <label class="ss-import-label">Import Source:</label>
+      <select class="ss-import-select" id="importSourceSelect">
+        <option value="live">Live Transcript</option>
+        <option value="upload">Upload Transcript</option>
+        <option value="studio">Transcript Studio</option>
+      </select>
+      <button class="ss-import-confirm-btn" id="importConfirmBtn">Import & Split</button>
+      <button class="ss-import-close-btn" id="importCloseBtn">&#10005;</button>
+    </div>
+  </div>
+
+  <!-- Subtitle Cards Container -->
+  <div class="ss-cards-wrapper" id="subtitleCardsWrapper">
+    <div class="ss-no-subtitles" id="noSubtitles">
+      <div class="ss-no-icon">&#9635;</div>
+      <h3>No Subtitles Yet</h3>
+      <p>Click "Import Transcript" to load text from the Speech Engine or Transcript Studio, or paste text directly below.</p>
+      <div class="ss-paste-area">
+        <textarea class="ss-paste-input" id="pasteInput" placeholder="Or paste your transcript text here..."></textarea>
+        <button class="ss-paste-btn" id="pasteGenerateBtn">Generate Subtitles</button>
+      </div>
+    </div>
+
+    <div class="ss-cards-list" id="subtitleCardsList" style="display:none;"></div>
+  </div>
+
+  <!-- Video Preview Placeholder -->
+  <div class="ss-preview-section">
+    <h3 class="ss-section-title">&#9654; Subtitle Preview</h3>
+    <div class="ss-video-placeholder">
+      <div class="ss-video-screen" id="videoScreen">
+        <div class="ss-subtitle-display" id="subtitleDisplay">Subtitles will appear here...</div>
+      </div>
+      <div class="ss-preview-controls">
+        <button class="ss-preview-btn" id="previewPlayBtn">&#9654; Play</button>
+        <button class="ss-preview-btn" id="previewPauseBtn" style="display:none;">&#8545; Pause</button>
+        <button class="ss-preview-btn" id="previewStopBtn">&#9632; Stop</button>
+        <span class="ss-preview-time" id="previewTime">00:00:00</span>
+        <span class="ss-preview-note">Video Preview coming soon</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer"><span>&#128737; Privacy First &nbsp; &#8226; &nbsp; No Login &nbsp; &#8226; &nbsp; No Data Storage &nbsp; &#8226; &nbsp; 100% Secure</span><span>Made with &#10084;&#65039; by <b class="gold">Squicky</b></span></footer>
+</main>
+</div>
+
+<div class="toast" id="toast"></div>
+<script src="subtitle-studio.js"></script>
+</body>
+</html>
