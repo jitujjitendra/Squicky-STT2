@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Squicky STT - Transcript Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="Squicky Logo.png" type="image/png">
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+  <div class="logo"><img src="Squicky Logo.png" alt="Squicky Logo"></div>
+  <nav class="menu">
+    <a href="transcript-studio.html" class="active"><span class="ico">&#127897;</span> Speech to Text</a>
+    <a href="index.html"><span class="ico">&#12349;</span> Live Speech to Text <span class="badge">LIVE</span></a>
+    <a href="#"><span class="ico">&#9635;</span> Subtitle Generator</a>
+    <a href="#"><span class="ico">&#9636;</span> Audio Summary</a>
+    <a href="#"><span class="ico">&#9639;</span> Blog Generator</a>
+    <a href="export-center.html"><span class="ico">&#8634;</span> Export History</a>
+    <a href="#"><span class="ico">?</span> How It Works</a>
+    <a href="#"><span class="ico">&#9638;</span> Tools</a>
+    <a href="#"><span class="ico">&#128737;</span> Privacy</a>
+    <a href="#"><span class="ico">&#9432;</span> About Squicky</a>
+  </nav>
+  <div class="privacy"><b>&#128737; Privacy First</b>Your files are processed temporarily and automatically deleted. We don't store your data. No login required.</div>
+</aside>
+
+<main class="main">
+<header class="header">
+  <div><h1>Transcript Studio</h1><p class="sub">Edit, search, and annotate your transcripts with speaker labels and timestamps.</p></div>
+  <div class="actions">
+    <button class="btn themeBtn" id="themeBtn">&#9788;</button>
+    <button class="btn">&#10068; Help</button>
+    <div class="brand">&#129689; &nbsp; SQUICKY</div>
+    <div class="theme-label" id="themeLabel">Change Theme</div>
+    <div class="theme-menu" id="themeMenu">
+      <small>Choose Theme</small>
+      <div class="theme-option active" data-theme="dark">&#9790; Dark <span>&#10003;</span></div>
+      <div class="theme-option" data-theme="medium">&#9673; Medium <span></span></div>
+      <div class="theme-option" data-theme="light">&#9788; Light <span></span></div>
+    </div>
+  </div>
+</header>
+
+<section class="ts-container">
+  <!-- Toolbar -->
+  <div class="ts-toolbar">
+    <div class="ts-toolbar-group">
+      <button class="ts-tool-btn" id="searchToggleBtn" title="Search & Replace">&#128269; Search</button>
+      <button class="ts-tool-btn" id="speakerToggleBtn" title="Speaker Labels">&#128101; Speakers</button>
+      <button class="ts-tool-btn" id="timestampToggleBtn" title="Timestamps">&#128339; Timestamps</button>
+    </div>
+    <div class="ts-toolbar-group">
+      <div class="ts-word-count" id="wordCount">0 words | 0 chars</div>
+    </div>
+    <div class="ts-toolbar-group">
+      <button class="ts-tool-btn" id="undoBtn" title="Undo (Ctrl+Z)">&#8630; Undo</button>
+      <button class="ts-tool-btn" id="redoBtn" title="Redo (Ctrl+Y)">&#8631; Redo</button>
+    </div>
+    <div class="ts-toolbar-group">
+      <button class="ts-tool-btn ts-copy-btn" id="copyAllBtn" title="Copy All">&#128203; Copy All</button>
+      <button class="ts-tool-btn ts-copy-btn" id="copySelectedBtn" title="Copy Selected">&#128203; Copy Selected</button>
+    </div>
+  </div>
+
+  <!-- Search Panel -->
+  <div class="ts-search-panel" id="searchPanel" style="display:none;">
+    <div class="ts-search-row">
+      <input type="text" class="ts-search-input" id="searchInput" placeholder="Search transcript...">
+      <span class="ts-match-count" id="matchCount">0 matches</span>
+      <button class="ts-search-nav" id="prevMatchBtn" title="Previous match">&#9650;</button>
+      <button class="ts-search-nav" id="nextMatchBtn" title="Next match">&#9660;</button>
+      <button class="ts-search-close" id="searchCloseBtn" title="Close search">&#10005;</button>
+    </div>
+    <div class="ts-replace-row">
+      <input type="text" class="ts-search-input" id="replaceInput" placeholder="Replace with...">
+      <button class="ts-replace-btn" id="replaceBtn">Replace</button>
+      <button class="ts-replace-btn" id="replaceAllBtn">Replace All</button>
+    </div>
+  </div>
+
+  <!-- Speaker Panel -->
+  <div class="ts-speaker-panel" id="speakerPanel" style="display:none;">
+    <div class="ts-speaker-row">
+      <label class="ts-speaker-label">Assign Speaker:</label>
+      <select class="ts-speaker-select" id="speakerSelect">
+        <option value="">-- Select Speaker --</option>
+        <option value="Speaker 1">Speaker 1</option>
+        <option value="Speaker 2">Speaker 2</option>
+        <option value="Speaker 3">Speaker 3</option>
+        <option value="Speaker 4">Speaker 4</option>
+      </select>
+      <input type="text" class="ts-speaker-new" id="newSpeakerInput" placeholder="Or create new speaker...">
+      <button class="ts-speaker-add-btn" id="addSpeakerBtn">+ Add</button>
+      <button class="ts-speaker-assign-btn" id="assignSpeakerBtn">Assign to Selected</button>
+    </div>
+  </div>
+
+  <!-- Timestamp Panel -->
+  <div class="ts-timestamp-panel" id="timestampPanel" style="display:none;">
+    <div class="ts-timestamp-row">
+      <label class="ts-timestamp-label">Insert Timestamp:</label>
+      <input type="text" class="ts-timestamp-input" id="timestampInput" placeholder="00:00:00" pattern="[0-9]{2}:[0-9]{2}:[0-9]{2}">
+      <button class="ts-timestamp-insert-btn" id="insertTimestampBtn">Insert</button>
+      <span class="ts-timestamp-divider">|</span>
+      <label class="ts-timestamp-label">Duration (sec):</label>
+      <input type="number" class="ts-timestamp-duration" id="durationInput" placeholder="e.g. 300" min="0">
+      <button class="ts-timestamp-auto-btn" id="autoTimestampBtn">Auto-Calculate</button>
+    </div>
+  </div>
+
+  <!-- Copy Options -->
+  <div class="ts-copy-options">
+    <label class="ts-copy-toggle"><input type="checkbox" id="includeTimestamps" checked> Include Timestamps</label>
+    <label class="ts-copy-toggle"><input type="checkbox" id="includeSpeakers" checked> Include Speaker Labels</label>
+  </div>
+
+  <!-- Transcript Editor -->
+  <div class="ts-editor-wrapper">
+    <div class="ts-line-numbers" id="lineNumbers"></div>
+    <div class="ts-editor" id="transcriptEditor" contenteditable="true" spellcheck="true">
+      <p class="ts-placeholder" id="editorPlaceholder">Paste or type your transcript here, or it will load automatically from the Speech Engine...</p>
+    </div>
+  </div>
+
+  <!-- Status Bar -->
+  <div class="ts-status-bar">
+    <span id="autoSaveStatus">Auto-saved</span>
+    <span id="editStatus">Ready</span>
+  </div>
+</section>
+
+<footer class="footer"><span>&#128737; Privacy First &nbsp; &#8226; &nbsp; No Login &nbsp; &#8226; &nbsp; No Data Storage &nbsp; &#8226; &nbsp; 100% Secure</span><span>Made with &#10084;&#65039; by <b class="gold">Squicky</b></span></footer>
+</main>
+</div>
+
+<div class="toast" id="toast"></div>
+<script src="transcript-studio.js"></script>
+</body>
+</html>

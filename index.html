@@ -1,83 +1,226 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="stt2">
+<html lang="en" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Squicky STT2 - Speech to Text</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="Squicky Logo.png" type="image/png">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Squicky STT - Speech to Text</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="Squicky Logo.png" type="image/png">
 </head>
 <body>
-    <div class="container">
-        <!-- Header -->
-        <header class="header">
-            <div class="brand">
-                <img src="Squicky Logo.png" alt="Squicky" class="logo">
-                <span class="brand-name">Squicky <span class="accent-text">STT2</span></span>
-            </div>
-            <div class="theme-switcher">
-                <button class="theme-btn" data-theme="stt1">STT1</button>
-                <button class="theme-btn active" data-theme="stt2">STT2</button>
-                <button class="theme-btn" data-theme="stt3">STT3</button>
-            </div>
-        </header>
+<div class="app">
+<aside class="sidebar">
+  <div class="logo"><img src="Squicky Logo.png" alt="Squicky Logo"></div>
+  <nav class="menu">
+    <a href="transcript-studio.html"><span class="ico">&#127897;</span> Speech to Text</a>
+    <a href="index.html" class="active"><span class="ico">&#12349;</span> Live Speech to Text <span class="badge">LIVE</span></a>
+    <a href="#"><span class="ico">&#9635;</span> Subtitle Generator</a>
+    <a href="#"><span class="ico">&#9636;</span> Audio Summary</a>
+    <a href="#"><span class="ico">&#9639;</span> Blog Generator</a>
+    <a href="export-center.html"><span class="ico">&#8634;</span> Export History</a>
+    <a href="#"><span class="ico">?</span> How It Works</a>
+    <a href="#"><span class="ico">&#9638;</span> Tools</a>
+    <a href="#"><span class="ico">&#128737;</span> Privacy</a>
+    <a href="#"><span class="ico">&#9432;</span> About Squicky</a>
+  </nav>
+  <div class="privacy"><b>&#128737; Privacy First</b>Your files are processed temporarily and automatically deleted. We don't store your data. No login required.</div>
+</aside>
 
-        <!-- Main Content -->
-        <main class="main">
-            <!-- Language Select -->
-            <div class="language-wrapper">
-                <select id="languageSelect">
-                    <option value="en-US">English (US)</option>
-                    <option value="en-IN">English (India)</option>
-                    <option value="hi-IN">Hindi</option>
-                    <option value="es-ES">Spanish</option>
-                    <option value="fr-FR">French</option>
-                    <option value="de-DE">German</option>
-                    <option value="ja-JP">Japanese</option>
-                    <option value="zh-CN">Chinese</option>
-                </select>
-            </div>
-
-            <!-- Mic Button -->
-            <div class="mic-section">
-                <button class="mic-btn" id="micBtn" aria-label="Start recording">
-                    <svg class="mic-icon" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
-                        <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
-                    </svg>
-                    <div class="pulse-ring"></div>
-                </button>
-                <p class="status-text" id="statusText">Tap to record</p>
-            </div>
-
-            <!-- Transcript Box -->
-            <div class="transcript-box" id="transcriptBox">
-                <p class="transcript-placeholder" id="placeholder">Your speech will appear here...</p>
-                <p class="transcript-text" id="finalText"></p>
-                <p class="transcript-interim" id="interimText"></p>
-            </div>
-
-            <!-- Action Buttons -->
-            <div class="actions">
-                <button class="action-btn" id="copyBtn">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
-                    <span>Copy</span>
-                </button>
-                <button class="action-btn" id="downloadBtn">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
-                    <span>Download</span>
-                </button>
-                <button class="action-btn" id="clearBtn">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
-                    <span>Clear</span>
-                </button>
-            </div>
-        </main>
+<main class="main">
+<header class="header">
+  <div><h1>Speech to Text</h1><p class="sub">Convert your audio or video to accurate text in seconds.</p></div>
+  <div class="actions">
+    <button class="btn themeBtn" id="themeBtn">&#9788;</button>
+    <button class="btn">&#10068; Help</button>
+    <div class="brand">&#129689; &nbsp; SQUICKY</div>
+    <div class="theme-label" id="themeLabel">Change Theme</div>
+    <div class="theme-menu" id="themeMenu">
+      <small>Choose Theme</small>
+      <div class="theme-option active" data-theme="dark">&#9790; Dark <span>&#10003;</span></div>
+      <div class="theme-option" data-theme="medium">&#9673; Medium <span></span></div>
+      <div class="theme-option" data-theme="light">&#9788; Light <span></span></div>
     </div>
+  </div>
+</header>
 
-    <!-- Toast Notification -->
-    <div class="toast" id="toast"></div>
+<section class="tool">
+  <div class="tabs">
+    <div class="tab" id="uploadTab" data-tab="upload">&#9729; Upload File</div>
+    <div class="tab active" id="liveTab" data-tab="live">&#127897; Live Recording <span class="live-pill">LIVE</span></div>
+  </div>
 
-    <script src="script.js"></script>
+  <!-- Upload File Panel -->
+  <div class="tab-panel" id="uploadPanel" style="display:none;">
+    <div class="upload-area" id="uploadArea">
+      <div class="upload-dropzone" id="dropzone">
+        <div class="upload-icon">&#9729;</div>
+        <h3 class="upload-title">Drag & Drop your file here</h3>
+        <p class="upload-subtitle">or click to browse</p>
+        <p class="upload-formats">Audio: MP3, WAV, OGG, M4A, FLAC, WEBM &nbsp;|&nbsp; Video: MP4, WEBM, MKV, AVI</p>
+        <p class="upload-limit">Maximum file size: 500MB</p>
+        <input type="file" id="fileInput" accept=".mp3,.wav,.ogg,.m4a,.flac,.webm,.mp4,.mkv,.avi" hidden>
+        <button class="upload-btn" id="uploadBtn">&#128194; Choose File</button>
+      </div>
+      <!-- File Info (shown after upload) -->
+      <div class="file-info" id="fileInfo" style="display:none;">
+        <div class="file-details">
+          <div class="file-icon">&#127925;</div>
+          <div class="file-meta">
+            <span class="file-name" id="fileName">-</span>
+            <span class="file-size" id="fileSize">-</span>
+            <span class="file-duration" id="fileDuration">-</span>
+          </div>
+          <button class="file-remove" id="fileRemove">&#10005;</button>
+        </div>
+        <!-- Upload Progress -->
+        <div class="upload-progress" id="uploadProgress" style="display:none;">
+          <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+          <span class="progress-text" id="progressText">Loading file...</span>
+        </div>
+      </div>
+      <!-- Processing Status -->
+      <div class="processing-status" id="processingStatus" style="display:none;">
+        <div class="processing-spinner"></div>
+        <span class="processing-text" id="processingText">Processing...</span>
+      </div>
+      <!-- Process Button -->
+      <div class="upload-actions" id="uploadActions" style="display:none;">
+        <button class="process-btn" id="processBtn">&#9654; Process File</button>
+        <button class="cancel-btn" id="cancelProcessBtn">&#10005; Cancel</button>
+      </div>
+      <!-- Privacy Notice -->
+      <div class="privacy-notice">
+        <span>&#128737;</span> Your files are processed <b>locally in your browser</b>. Nothing is uploaded to any server. Data is auto-cleared after processing.
+      </div>
+    </div>
+    <!-- Upload Transcript Area -->
+    <div class="upload-transcript" id="uploadTranscript" style="display:none;">
+      <div class="transHead">
+        <div class="title">&#9679; &nbsp; File Transcript</div>
+        <div class="topSelects">
+          <div class="selectlike">
+            <select id="uploadLanguageSelect">
+              <option value="en-US">&#127760; English (US)</option>
+              <option value="en-IN">&#127760; English (India)</option>
+              <option value="hi-IN">&#127760; Hindi</option>
+              <option value="hinglish">&#127760; Hinglish (Auto)</option>
+              <option value="es-ES">&#127760; Spanish</option>
+              <option value="fr-FR">&#127760; French</option>
+              <option value="de-DE">&#127760; German</option>
+              <option value="ja-JP">&#127760; Japanese</option>
+              <option value="zh-CN">&#127760; Chinese</option>
+            </select>
+          </div>
+          <button class="clear" id="uploadClearBtn">&#128465; Clear</button>
+        </div>
+      </div>
+      <div class="transBox" id="uploadTranscriptBox">
+        <p class="placeholder" id="uploadPlaceholder">Your transcript will appear here after processing...</p>
+        <span id="uploadFinalText"></span>
+        <span class="interim" id="uploadInterimText"></span>
+      </div>
+      <div class="transActions">
+        <button class="copy" id="uploadCopyBtn">&#128203; Copy Text</button>
+        <button class="download" id="uploadDownloadBtn">&#11015; Download TXT</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Live Recording Panel -->
+  <div class="tab-panel" id="livePanel">
+    <div class="studio">
+      <div class="left">
+        <div class="micOuter" id="micOuter">
+          <div class="micMid"><div class="mic">&#127897;</div></div>
+        </div>
+        <!-- Audio Level Indicator -->
+        <div class="audio-level" id="audioLevel">
+          <div class="level-bar" id="levelBar1"></div>
+          <div class="level-bar" id="levelBar2"></div>
+          <div class="level-bar" id="levelBar3"></div>
+          <div class="level-bar" id="levelBar4"></div>
+          <div class="level-bar" id="levelBar5"></div>
+          <div class="level-bar" id="levelBar6"></div>
+          <div class="level-bar" id="levelBar7"></div>
+          <div class="level-bar" id="levelBar8"></div>
+          <div class="level-bar" id="levelBar9"></div>
+        </div>
+        <div class="timer"><span id="timerDisplay">00:00:00</span> <span class="red" id="recDot" style="display:none;">&#9679;</span><span class="liveText" id="liveLabel" style="display:none;">Live</span></div>
+        <!-- Recording Status -->
+        <div class="rec-status" id="recStatus">Ready</div>
+        <div class="controls">
+          <button class="start" id="startBtn">&#9654; Start</button>
+          <button id="pauseBtn">&#8545; Pause</button>
+          <button class="stop" id="stopBtn">&#9632; Stop</button>
+        </div>
+        <p class="note">&#128737; Your speech is processed in real-time.<br>No data is stored or sent to any server. No login required.</p>
+      </div>
+      <div class="right">
+        <div class="transHead">
+          <div class="title">&#9679; &nbsp; Live Transcript</div>
+          <div class="topSelects">
+            <div class="selectlike">
+              <select id="languageSelect">
+                <option value="en-US">&#127760; English (US)</option>
+                <option value="en-IN">&#127760; English (India)</option>
+                <option value="hi-IN">&#127760; Hindi</option>
+                <option value="hinglish">&#127760; Hinglish (Auto)</option>
+                <option value="es-ES">&#127760; Spanish</option>
+                <option value="fr-FR">&#127760; French</option>
+                <option value="de-DE">&#127760; German</option>
+                <option value="ja-JP">&#127760; Japanese</option>
+                <option value="zh-CN">&#127760; Chinese</option>
+              </select>
+            </div>
+            <button class="clear" id="clearBtn">&#128465; Clear</button>
+          </div>
+        </div>
+        <div class="transBox" id="transcript">
+          <p class="placeholder" id="placeholder">Start speaking and your transcript will appear here...</p>
+          <span id="finalText"></span>
+          <span class="interim" id="interimText"></span>
+        </div>
+        <div class="transActions">
+          <button class="copy" id="copyBtn">&#128203; Copy Text</button>
+          <button class="download" id="downloadBtn">&#11015; Download TXT</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="settings">
+    <div class="setting"><label>&#127760; Language</label><select id="langSetting"><option value="auto">Auto Detect</option><option value="en-US">English</option><option value="hi-IN">Hindi</option><option value="hinglish">Hinglish</option></select></div>
+    <div class="setting"><label>&#127897; Mic Sensitivity</label><select id="micSensitivity"><option value="medium">Medium</option><option value="high">High</option><option value="low">Low</option></select></div>
+    <div class="setting"><label>&#12349; Noise Detection</label><select id="noiseDetection"><option value="normal">Normal</option><option value="high">High</option><option value="off">Off</option></select></div>
+    <div class="setting"><label>Aa Punctuation</label><div class="punct"><span class="toggle" id="punctToggle"></span> Auto Punctuation</div></div>
+  </div>
+</section>
+
+<section class="lower">
+  <div class="box"><h3>&#11088; What can you do?</h3><div class="cards">
+    <div class="fcard"><div class="fico">&#128196;</div><div><b>Get Transcript</b><span>Accurate text from speech</span></div></div>
+    <div class="fcard"><div class="fico">&#9635;</div><div><b>Subtitles (SRT)</b><span>Generate subtitle files</span></div></div>
+    <div class="fcard"><div class="fico">&#128210;</div><div><b>Meeting Notes</b><span>Summarize your meetings</span></div></div>
+    <div class="fcard"><div class="fico">&#9998;</div><div><b>Blog from Audio</b><span>Convert audio to blog articles</span></div></div>
+    <div class="fcard"><div class="fico">&#11015;</div><div><b>Download</b><span>TXT, PDF, DOCX and more</span></div></div>
+    <div class="fcard"><div class="fico">&#8984;</div><div><b>Share</b><span>Share or copy content</span></div></div>
+    <div class="fcard"><div class="fico">&#128101;</div><div><b>No Login</b><span>100% free to use</span></div></div>
+    <div class="fcard"><div class="fico">&#128465;</div><div><b>Auto Delete</b><span>Your files are never stored</span></div></div>
+  </div></div>
+  <div class="box"><h3>&#11088; How it works</h3><div class="steps">
+    <div class="step"><div class="circle">&#9729;</div><div class="stepNum">1</div><p><b>Record or Upload</b><br>Upload your audio or start live recording</p></div>
+    <div class="step"><div class="circle">&#12349;</div><div class="stepNum">2</div><p><b>Process</b><br>Our AI converts speech to text</p></div>
+    <div class="step"><div class="circle">&#9998;</div><div class="stepNum">3</div><p><b>Review</b><br>Check and edit your transcript</p></div>
+    <div class="step"><div class="circle">&#11015;</div><div class="stepNum">4</div><p><b>Export</b><br>Download in your preferred format</p></div>
+  </div></div>
+</section>
+
+<footer class="footer"><span>&#128737; Privacy First &nbsp; &#8226; &nbsp; No Login &nbsp; &#8226; &nbsp; No Data Storage &nbsp; &#8226; &nbsp; 100% Secure</span><span>Made with &#10084;&#65039; by <b class="gold">Squicky</b></span></footer>
+</main>
+</div>
+
+<div class="toast" id="toast"></div>
+<script src="script.js"></script>
 </body>
 </html>
