@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Squicky STT - Content Studio</title>
+<title>Squicky STT - Creator Studio</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <link rel="icon" href="Squicky Logo.png" type="image/png">
@@ -17,10 +17,10 @@
     <a href="index.html"><span class="ico">&#12349;</span> Live Speech to Text <span class="badge">LIVE</span></a>
     <a href="subtitle-studio.html"><span class="ico">&#9635;</span> Subtitle Generator</a>
     <a href="content-studio.html"><span class="ico">&#9636;</span> Audio Summary</a>
-    <a href="content-studio.html" class="active"><span class="ico">&#9639;</span> Blog Generator</a>
+    <a href="content-studio.html"><span class="ico">&#9639;</span> Blog Generator</a>
     <a href="export-center.html"><span class="ico">&#8634;</span> Export History</a>
     <a href="meeting-intelligence.html"><span class="ico">?</span> How It Works</a>
-    <a href="creator-studio.html"><span class="ico">&#9638;</span> Tools</a>
+    <a href="creator-studio.html" class="active"><span class="ico">&#9638;</span> Tools</a>
     <a href="#"><span class="ico">&#128737;</span> Privacy</a>
     <a href="business-studio.html"><span class="ico">&#9432;</span> About Squicky</a>
   </nav>
@@ -29,7 +29,7 @@
 
 <main class="main">
 <header class="header">
-  <div><h1>Content Studio</h1><p class="sub">Transform your transcripts into blogs, summaries, FAQs, notes, articles, and social posts.</p></div>
+  <div><h1>Creator Studio</h1><p class="sub">Generate YouTube titles, descriptions, tags, chapters, shorts ideas, and podcast notes from your transcripts.</p></div>
   <div class="actions">
     <button class="btn themeBtn" id="themeBtn">&#9788;</button>
     <button class="btn">&#10068; Help</button>
@@ -44,51 +44,51 @@
   </div>
 </header>
 
-<section class="cs-container">
+<section class="cr-container">
   <!-- Input Section -->
-  <div class="cs-input-section">
-    <h3 class="cs-section-title">&#128196; Input Source</h3>
-    <div class="cs-source-row">
-      <label class="cs-source-label">Transcript Source:</label>
-      <select class="cs-source-select" id="sourceSelect">
+  <div class="cr-input-section">
+    <h3 class="cr-section-title">&#128196; Input Source</h3>
+    <div class="cr-source-row">
+      <label class="cr-source-label">Transcript Source:</label>
+      <select class="cr-source-select" id="sourceSelect">
         <option value="live">Live Transcript</option>
         <option value="upload">Upload Transcript</option>
         <option value="studio">Transcript Studio</option>
       </select>
-      <button class="cs-load-btn" id="loadSourceBtn">&#8635; Load</button>
+      <button class="cr-load-btn" id="loadSourceBtn">&#8635; Load</button>
     </div>
-    <div class="cs-preview-box" id="inputPreview">
-      <p class="cs-placeholder" id="inputPlaceholder">Select a source and click Load to preview your transcript...</p>
+    <div class="cr-preview-box" id="inputPreview">
+      <p class="cr-placeholder" id="inputPlaceholder">Select a source and click Load to preview your transcript...</p>
     </div>
-    <div class="cs-input-stats" id="inputStats">
+    <div class="cr-input-stats" id="inputStats">
       <span id="inputWordCount">0 words</span>
       <span id="inputCharCount">0 characters</span>
     </div>
   </div>
 
   <!-- Output Tabs -->
-  <div class="cs-output-section">
-    <div class="cs-tabs">
-      <button class="cs-tab active" data-type="blog">&#128221; Blog</button>
-      <button class="cs-tab" data-type="summary">&#128203; Summary</button>
-      <button class="cs-tab" data-type="faq">&#10067; FAQ</button>
-      <button class="cs-tab" data-type="notes">&#128210; Notes</button>
-      <button class="cs-tab" data-type="article">&#128240; Article</button>
-      <button class="cs-tab" data-type="social">&#128225; Social</button>
+  <div class="cr-output-section">
+    <div class="cr-tabs">
+      <button class="cr-tab active" data-type="titles">&#127916; Titles</button>
+      <button class="cr-tab" data-type="description">&#128196; Description</button>
+      <button class="cr-tab" data-type="tags">&#127991; Tags</button>
+      <button class="cr-tab" data-type="chapters">&#128214; Chapters</button>
+      <button class="cr-tab" data-type="shorts">&#9889; Shorts Ideas</button>
+      <button class="cr-tab" data-type="podcast">&#127911; Podcast Notes</button>
     </div>
 
-    <div class="cs-generate-row">
-      <button class="cs-generate-btn" id="generateBtn">&#9654; Generate</button>
-      <button class="cs-clear-btn" id="clearOutputBtn">&#128465; Clear</button>
+    <div class="cr-generate-row">
+      <button class="cr-generate-btn" id="generateBtn">&#9654; Generate</button>
+      <button class="cr-clear-btn" id="clearOutputBtn">&#128465; Clear</button>
     </div>
 
     <!-- Generated Content Area -->
-    <div class="cs-output-box" id="outputBox" contenteditable="true" data-placeholder="Generated content will appear here. You can edit it after generation..."></div>
+    <div class="cr-output-box" id="outputBox" contenteditable="true" data-placeholder="Generated creator content will appear here..."></div>
 
     <!-- Action Buttons -->
-    <div class="cs-output-actions">
-      <button class="cs-copy-btn" id="copyOutputBtn">&#128203; Copy</button>
-      <button class="cs-download-btn" id="downloadOutputBtn">&#11015; Download</button>
+    <div class="cr-output-actions">
+      <button class="cr-copy-btn" id="copyOutputBtn">&#128203; Copy</button>
+      <button class="cr-download-btn" id="downloadOutputBtn">&#11015; Download</button>
     </div>
   </div>
 </section>
@@ -98,6 +98,6 @@
 </div>
 
 <div class="toast" id="toast"></div>
-<script src="content-studio.js"></script>
+<script src="creator-studio.js"></script>
 </body>
 </html>
