@@ -399,6 +399,11 @@ function stopRecording() {
     micOuter.classList.remove('recording');
     recStatus.textContent = finalTranscript.trim() ? 'Done!' : 'Ready';
     recStatus.className = 'rec-status';
+
+    // Save transcript to localStorage for Transcript Studio
+    if (finalTranscript.trim()) {
+        localStorage.setItem('squickyLiveTranscript', finalTranscript.trim());
+    }
 }
 
 startBtn.addEventListener('click', startRecording);
@@ -784,6 +789,8 @@ function finishFileProcessing(statusInterval) {
     if (uploadFinalTranscriptText.trim()) {
         processingText.textContent = 'Done!';
         showToast('Processing complete!');
+        // Save transcript to localStorage for Transcript Studio
+        localStorage.setItem('squickyUploadTranscript', uploadFinalTranscriptText.trim());
     } else {
         uploadPlaceholder.style.display = 'block';
         uploadPlaceholder.textContent = 'No speech detected. Try speaking near the microphone while the file plays.';
